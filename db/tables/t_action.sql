@@ -1,5 +1,5 @@
 CREATE TABLE t_action (
-  id            INT,
+  id            INT AUTO_INCREMENT,
   name          VARCHAR(55) NOT NULL UNIQUE,
   description   VARCHAR(255),
   source_status INT         NOT NULL,

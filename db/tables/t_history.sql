@@ -1,5 +1,5 @@
 CREATE TABLE t_history (
-  id        INT,
+  id        INT AUTO_INCREMENT,
   task      INT,
   action    INT,
   actor     INT,

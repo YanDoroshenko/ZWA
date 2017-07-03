@@ -33,9 +33,12 @@ if (isset($_POST['btn-login'])) {
 
         $hashedPassword = hash('sha512', $password, $login); // password hashing using SHA256
 
-        $res = mysqli_query($db, "SELECT id FROM t_user WHERE login='$login' AND password_hash = '$hashedPassword'");
-        $row = mysqli_fetch_assoc($res);
-        $count = mysqli_num_rows($res); // if uname/pass correct it returns must be 1 row
+        $query = mysqli_prepare($db, "SELECT id FROM t_user WHERE login = ? AND password_hash = ?");
+        $query->bind_param("ss", $login, $hashedPassword);
+        $query->execute();
+        $result = $query->get_result();
+        $row = mysqli_fetch_assoc($result);
+        $count = mysqli_num_rows($result); // if uname/pass correct it returns must be 1 row
 
         if ($count == 1) {
             $_SESSION['user'] = $row['id'];

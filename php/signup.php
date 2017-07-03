@@ -11,49 +11,47 @@ $error = false;
 if (isset($_POST['btn-signup'])) {
 
     // clean user inputs to prevent sql injections
-    $name = trim($_POST['name']);
-    $name = strip_tags($name);
-    $name = htmlspecialchars($name);
+    $name = $_POST['name'];
 
-    $login = trim($_POST['email']);
-    $login = strip_tags($login);
-    $login = htmlspecialchars($login);
+    $login = $_POST['login'];
 
-    $pass = trim($_POST['pass']);
-    $pass = strip_tags($pass);
-    $pass = htmlspecialchars($pass);
+    $password = $_POST['password'];
 
 
-    // check email exist or not
-    $query = "SELECT login FROM t_user WHERE login='$login'";
-    $result = mysqli_query($db, $query);
+    // check login exist or not
+    $query = $db->prepare("SELECT login FROM t_user WHERE login = ?");
+    $query->bind_param("s", $login);
+    $query->execute();
+    $result = $query->get_result();
     $count = mysqli_num_rows($result);
     if ($count != 0) {
         $error = true;
-        echo "Provided Email is already in use.";
+        echo "Provided login is already in use.";
     }
     // password validation
-    if (empty($pass)) {
+    if (empty($password)) {
         $error = true;
         echo "Please enter password.";
     }
 
     // password encrypt using SHA512();
-    $password = hash('sha512', $pass, $login);
+    $hashedPassword = hash('sha512', $password, $login);
 
     // if there's no error, continue to signup
     if (!$error) {
 
-        $query = "INSERT INTO t_user(name,login,password_hash) VALUES('$name','$login','$password')";
-        $res = mysqli_query($db, $query);
+        $query = $db->prepare("INSERT INTO t_user(login, password_hash, name) VALUES(?, ?, ?)");
+        $query->bind_param("sss", $login, $hashedPassword, $name);
 
-        if ($res) {
+        if ($query->execute()) {
             echo "Successfully registered, you may login now";
             unset($name);
             unset($login);
-            unset($pass);
+            unset($password);
         }
         else {
+            echo $query->error . "<br/>";
+            echo $db->error . "<br/>";
             echo "Something went wrong, try again later...";
         }
     }
@@ -66,7 +64,7 @@ if (isset($_POST['btn-signup'])) {
         <title>Sign up</title>
     </head>
     <body>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <h2>Sign Up</h2>
 
         <input type="text" name="name" placeholder="Name"
@@ -74,12 +72,12 @@ if (isset($_POST['btn-signup'])) {
                if (isset($name))
                    echo $name ?>"/>
 
-        <input type="text" name="email" placeholder="Login"
+        <input type="text" name="login" placeholder="Login"
                value="<?php
                if (isset($login))
                    echo $login ?>"/>
 
-        <input type="password" name="pass" placeholder=" Password"/>
+        <input type="password" name="password" placeholder=" Password"/>
 
         <button type="submit" name="btn-signup">Sign Up</button>
 

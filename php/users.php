@@ -10,7 +10,10 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 // select loggedin users detail
-$users = $db->query("SELECT * FROM t_user");
+$query = $db->prepare("SELECT id, login, name FROM t_user");
+$query->execute();
+$users = $query->get_result();
+
 ?>
     <!DOCTYPE html>
     <html>

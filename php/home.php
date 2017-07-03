@@ -10,8 +10,10 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 // select loggedin users detail
-$res = mysqli_query($db, "SELECT * FROM t_user WHERE id=" . $_SESSION['user']);
-$userRow = mysqli_fetch_array($res);
+$query = $db->prepare("SELECT id, login, name FROM t_user WHERE id = ?");
+$query->bind_param("i", $_SESSION['user']);
+$query->execute();
+$userRow = $query->get_result()->fetch_assoc();
 ?>
     <!DOCTYPE html>
     <html>

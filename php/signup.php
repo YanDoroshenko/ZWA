@@ -10,7 +10,6 @@ $error = false;
 
 if (isset($_POST['btn-signup'])) {
 
-    // clean user inputs to prevent sql injections
     $name = $_POST['name'];
 
     $login = $_POST['login'];
@@ -18,7 +17,6 @@ if (isset($_POST['btn-signup'])) {
     $password = $_POST['password'];
 
 
-    // check login exist or not
     $query = $db->prepare("SELECT login FROM t_user WHERE login = ?");
     $query->bind_param("s", $login);
     $query->execute();
@@ -28,16 +26,14 @@ if (isset($_POST['btn-signup'])) {
         $error = true;
         echo "Provided login is already in use.";
     }
-    // password validation
+
     if (empty($password)) {
         $error = true;
         echo "Please enter password.";
     }
 
-    // password encrypt using SHA512();
     $hashedPassword = hash('sha512', $password, $login);
 
-    // if there's no error, continue to signup
     if (!$error) {
 
         $query = $db->prepare("INSERT INTO t_user(login, password_hash, name) VALUES(?, ?, ?)");

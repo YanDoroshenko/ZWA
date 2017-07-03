@@ -3,7 +3,6 @@ ob_start();
 session_start();
 require_once 'db.php';
 
-// it will never let you open index(login) page if session is set
 if (isset($_SESSION['user'])) {
     header("Location: home.php");
     exit;
@@ -13,7 +12,6 @@ $error = false;
 
 if (isset($_POST['btn-login'])) {
 
-    // prevent sql injections/ clear user invalid inputs
     $login = $_POST['login'];
 
     $password = $_POST['password'];
@@ -31,14 +29,14 @@ if (isset($_POST['btn-login'])) {
     // if there's no error, continue to login
     if (!$error) {
 
-        $hashedPassword = hash('sha512', $password, $login); // password hashing using SHA256
+        $hashedPassword = hash('sha512', $password, $login);
 
         $query = mysqli_prepare($db, "SELECT id FROM t_user WHERE login = ? AND password_hash = ?");
         $query->bind_param("ss", $login, $hashedPassword);
         $query->execute();
         $result = $query->get_result();
         $row = mysqli_fetch_assoc($result);
-        $count = mysqli_num_rows($result); // if uname/pass correct it returns must be 1 row
+        $count = mysqli_num_rows($result);
 
         if ($count == 1) {
             $_SESSION['user'] = $row['id'];

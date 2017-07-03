@@ -1,5 +1,6 @@
 <?php
 ob_start();
+include("header.php");
 session_start();
 require_once 'db.php';
 
@@ -19,8 +20,6 @@ $userRow = mysqli_fetch_array($res);
         <title>Welcome - <?php echo $userRow['name']; ?></title>
     </head>
     <body>
-
-    <a href="logout.php?logout">Logout</a>
 
     <h1>Logged in</h1>
 

@@ -14,21 +14,16 @@ $error = false;
 if (isset($_POST['btn-login'])) {
 
     // prevent sql injections/ clear user invalid inputs
-    $login = trim($_POST['login']);
-    $login = strip_tags($login);
-    $login = htmlspecialchars($login);
+    $login = $_POST['login'];
 
-    $pass = trim($_POST['pass']);
-    $pass = strip_tags($pass);
-    $pass = htmlspecialchars($pass);
-    // prevent sql injections / clear user invalid inputs
+    $password = $_POST['password'];
 
     if (empty($login)) {
         $error = true;
         echo "Please enter your login.";
     }
 
-    if (empty($pass)) {
+    if (empty($password)) {
         $error = true;
         echo "Please enter your password.";
     }
@@ -36,9 +31,9 @@ if (isset($_POST['btn-login'])) {
     // if there's no error, continue to login
     if (!$error) {
 
-        $password = hash('sha512', $pass, $login); // password hashing using SHA256
+        $hashedPassword = hash('sha512', $password, $login); // password hashing using SHA256
 
-        $res = mysqli_query($db, "SELECT id FROM t_user WHERE login='$login' AND password_hash = '$password'");
+        $res = mysqli_query($db, "SELECT id FROM t_user WHERE login='$login' AND password_hash = '$hashedPassword'");
         $row = mysqli_fetch_assoc($res);
         $count = mysqli_num_rows($res); // if uname/pass correct it returns must be 1 row
 
@@ -69,7 +64,7 @@ if (isset($_POST['btn-login'])) {
                if (isset($login))
                    echo $login; ?>"
         />
-        <input type="password" name="pass" placeholder="Password"/>
+        <input type="password" name="password" placeholder="Password"/>
         <button type="submit" name="btn-login">Log in</button>
 
         <a href="signup.php">Sign Up</a>

@@ -67,9 +67,20 @@ if (isset($_POST['btn-save'])) {
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <input type="text" name="name" value="<?php echo $task['name'] ?>" title="Name"/>
         <select name="status" title="Status">
-            <option value="1">New</option>
-            <option value="2">In progress</option>
-            <option value="3">Complete</option>
+            <?php
+            $query = $db->prepare("SELECT id, title, description FROM t_status");
+            if ($query->execute()) {
+                $statuses = $query->get_result();
+                while ($status = $statuses->fetch_assoc())
+                    echo "<option value=\"" . $status['id'] . "\" title=\"" . $status['description'] . "\">" . $status['title'] . "</option>";
+            }
+            else {
+                echo "Something went wrong:<br/>";
+                echo $db->error . "<br/>";
+                echo $query->error . "<br/>";
+            }
+            ?>
+            ?>
         </select>
         <button type="submit" name="btn-save">Save task</button>
     </form>

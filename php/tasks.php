@@ -28,15 +28,16 @@ else {
     <body>
 
     <?php
-    while ($task = $tasks->fetch_assoc()) {
-        echo $task['id'] . " ";
-        echo $task['name'] . " ";
-        echo $task['priority'] . " ";
-        echo $task['status'] . " ";
-        echo $task['reporter'] . " ";
-        echo $task['assignee'] . " ";
-        echo "<br/>";
-    }
+    if (isset($tasks))
+        while ($task = $tasks->fetch_assoc()) {
+            echo $task['id'] . " ";
+            echo $task['name'] . " ";
+            echo $task['priority'] . " ";
+            echo $task['status'] . " ";
+            echo $task['reporter'] . " ";
+            echo $task['assignee'] . " ";
+            echo "<br/>";
+        }
     ?>
 
     <a href="new_task.php">New task</a>

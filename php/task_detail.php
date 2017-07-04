@@ -9,7 +9,10 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
-$query = $db->prepare("SELECT t.id 'id', t.name 'name', priority, s.title 'status', r.login 'reporter', a.login 'assignee' FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id");
+$id = $_GET['id'];
+
+$query = $db->prepare("SELECT t.id 'id', t.name 'name', priority, s.title 'status', r.login 'reporter', a.login 'assignee' FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id WHERE t.id = ?");
+$query->bind_param("i", $id);
 if (!$query || !$query->execute()) {
     echo $query->error;
     echo $db->error;
@@ -23,14 +26,14 @@ else {
     <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Tasks</title>
+        <title>Task detail</title>
     </head>
     <body>
 
     <?php
     if (isset($tasks))
         while ($task = $tasks->fetch_assoc()) {
-            echo "<a href=task_detail.php?id=" . $task['id'] . ">" . $task['id'] . "</a> ";
+            echo "<a href=task_detail.php?" . $task['id'] . ">" . $task['id'] . "</a> ";
             echo $task['name'] . " ";
             echo $task['priority'] . " ";
             echo $task['status'] . " ";
@@ -40,7 +43,6 @@ else {
         }
     ?>
 
-    <a href="new_task.php">New task</a>
     </body>
     </html>
 <?php ob_end_flush(); ?>

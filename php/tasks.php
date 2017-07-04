@@ -18,7 +18,7 @@ $tasks = $query->get_result();
     <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Users</title>
+        <title>Tasks</title>
     </head>
     <body>
 
@@ -32,7 +32,7 @@ $tasks = $query->get_result();
     }
     ?>
 
-    <a href="task_detail.php">New task</a>
+    <a href="new_task.php">New task</a>
     </body>
     </html>
 <?php ob_end_flush(); ?>

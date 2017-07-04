@@ -22,6 +22,9 @@ if (isset($_POST['btn-save'])) {
         echo "Please enter status title.";
     }
 
+    if (isset($_POST['final']) && $_POST['final'] == 'y')
+        $isFinal = true;
+
     if (!empty($_FILES["iconUpload"]["name"])) {
         $source_file = $_FILES["iconUpload"]["name"];
         $upload_dir = "uploads/";
@@ -36,14 +39,16 @@ if (isset($_POST['btn-save'])) {
         $sql = "INSERT INTO t_status(title";
         if (isset($description))
             $sql .= ", description";
-        if (isset($_POST['final']))
+        if (isset($isFinal)) {
+            echo "FINAL SET";
             $sql .= ", final";
+        }
         if (isset($target_file))
             $sql .= ", icon_path";
         $sql .= ") VALUES (?";
         if (isset($description))
             $sql .= ", ?";
-        if (isset($_POST['final']))
+        if (isset($isFinal))
             $sql .= ", ?";
         if (isset($target_file))
             $sql .= ", ?";
@@ -55,9 +60,9 @@ if (isset($_POST['btn-save'])) {
             $types .= "s";
             $values[] = $description;
         }
-        if (isset($_POST['final'])) {
-            $types .= "b";
-            $values[] = true;
+        if (isset($isFinal)) {
+            $types .= "i";
+            $values[] = $isFinal;
         }
         if (isset($target_file)) {
             if (move_uploaded_file($_FILES["iconUpload"]["tmp_name"], $target_file)) {
@@ -104,7 +109,8 @@ if (isset($_POST['btn-save'])) {
         <input
                 type="checkbox"
                 name="final"
-                title="Task can't be modified after this status is assigned">
+                title="Task can't be modified after this status is assigned"
+                value="y">
         <input type="file" name="iconUpload">
         <button type="submit" name="btn-save">Save status</button>
     </form>

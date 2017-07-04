@@ -30,9 +30,6 @@ if (isset($_POST['btn-save'])) {
     }
 
     if (!$error) {
-        foreach ($_POST as $k => $v)
-            if (!empty($v))
-                echo $k . " => " . $v;
         $sql = "INSERT INTO t_task(status, reporter";
         foreach ($_POST as $k => $v)
             if (!empty($v))
@@ -42,7 +39,6 @@ if (isset($_POST['btn-save'])) {
             if (!empty($v))
                 $sql .= ", ?";
         $sql .= ")";
-        echo $sql;
         $query = $db->prepare($sql);
         $types = "";
         $values = [];

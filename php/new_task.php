@@ -67,14 +67,7 @@ if (isset($_POST['btn-save'])) {
     <body>
 
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <input type="number" name="priority" min="1" max="10"
-               value="<?php
-               if (isset($task))
-                   echo $task['priority'];
-               else
-                   echo 5;
-               ?>"
-               title="Priority">
+        <input type="number" name="priority" min="1" max="10" title="Priority">
         <select name="assignee" title="Assignee">
             <?php
             echo "<option value=''>None</option>";
@@ -97,20 +90,11 @@ if (isset($_POST['btn-save'])) {
                 type="text"
                 name="name"
                 placeholder="Task name"
-                value="<?php
-                if (isset($task))
-                    echo $task['name'];
-                ?>"
                 title="Name"/>
         <input
                 type="text"
                 name="description"
                 placeholder="Task description"
-                value="<?php
-                if (isset($task))
-                    echo $task['description'];
-                ?>"
-                title="Name"/>
         <button type="submit" name="btn-save">Save task</button>
     </form>
     </body>

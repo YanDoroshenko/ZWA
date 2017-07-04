@@ -9,9 +9,14 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
-$query = $db->prepare("SELECT t.id 'id', name, priority, s.title 'status' FROM t_task t LEFT JOIN t_status s ON t.status = s.id");
-$query->execute();
-$tasks = $query->get_result();
+$query = $db->prepare("SELECT t.id 'id', t.name 'name', priority, s.title 'status', r.login 'reporter', a.login 'assignee' FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id");
+if (!$query || !$query->execute()) {
+    echo $query->error;
+    echo $db->error;
+}
+else {
+    $tasks = $query->get_result();
+}
 
 ?>
     <!DOCTYPE html>
@@ -27,7 +32,9 @@ $tasks = $query->get_result();
         echo $task['id'] . " ";
         echo $task['name'] . " ";
         echo $task['priority'] . " ";
-        echo $task['status'];
+        echo $task['status'] . " ";
+        echo $task['reporter'] . " ";
+        echo $task['assignee'] . " ";
         echo "<br/>";
     }
     ?>

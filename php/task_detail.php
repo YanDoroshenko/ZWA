@@ -11,7 +11,7 @@ if (!isset($_SESSION['user'])) {
 
 $id = $_GET['id'];
 
-$query = $db->prepare("SELECT t.id 'id', t.name 'name', priority, s.title 'status', r.login 'reporter', a.login 'assignee' FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id WHERE t.id = ?");
+$query = $db->prepare("SELECT t.id 'id', t.name 'name', priority, s.title 'status', s.icon_path 'icon', r.login 'reporter', a.login 'assignee' FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id WHERE t.id = ?");
 $query->bind_param("i", $id);
 if (!$query || !$query->execute()) {
     echo $query->error;
@@ -37,6 +37,7 @@ else {
             echo $task['name'] . " ";
             echo $task['priority'] . " ";
             echo $task['status'] . " ";
+            echo "<img src=\"" . $task['icon'] . "\" width=15pt/>";
             echo $task['reporter'] . " ";
             echo $task['assignee'] . " ";
             echo "<br/>";

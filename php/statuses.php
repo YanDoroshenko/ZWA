@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
-$query = $db->prepare("SELECT id, title, description, icon_path, final FROM t_status");
+$query = $db->prepare("SELECT id, title, description, icon_path, final, system FROM t_status");
 if (!$query || !$query->execute()) {
     echo $query->error;
     echo $db->error;
@@ -35,6 +35,8 @@ else {
             echo $status['title'] . " ";
             echo $status['description'] . " ";
             echo $status['final'] . " ";
+            if (!$status['system'])
+                echo "<a href=delete_status.php?id=" . $status['id'] . ">X</a>";
             echo "<br/>";
         }
     ?>

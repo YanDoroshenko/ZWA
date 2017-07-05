@@ -67,7 +67,7 @@ if (isset($_POST['btn-save'])) {
     <body>
 
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <input type="number" name="priority" min="1" max="10" title="Priority">
+        <input type="number" name="priority" min="1" max="10" title="Priority" value="5">
         <select name="assignee" title="Assignee">
             <?php
             echo "<option value=''>None</option>";
@@ -94,7 +94,7 @@ if (isset($_POST['btn-save'])) {
         <input
                 type="text"
                 name="description"
-                placeholder="Task description"
+                placeholder="Task description"/>
         <button type="submit" name="btn-save">Save task</button>
     </form>
     </body>

@@ -26,14 +26,24 @@ if (isset($_POST['btn-save'])) {
         $isFinal = true;
 
     if (!empty($_FILES["iconUpload"]["name"])) {
-        $source_file = $_FILES["iconUpload"]["name"];
-        $upload_dir = "uploads/";
-        $target_file = $upload_dir . basename($source_file);
-        $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-        $target_file = $upload_dir . strtolower($title) . "." . $imageFileType;
+        if (is_uploaded_file($_FILES["iconUpload"]["tmp_name"])) {
+            foreach ($_FILES["iconUpload"] as $FILE) {
+                echo $FILE;
+            };
+            echo "<br/>";
+            $source_file = $_FILES["iconUpload"]["name"];
+            $upload_dir = "uploads/";
+            $target_file = $upload_dir . basename($source_file);
+            $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+            $target_file = $upload_dir . strtolower($title) . "." . $imageFileType;
 
-        if (getimagesize($_FILES["iconUpload"]["tmp_name"]) === false)
+            if (getimagesize($_FILES["iconUpload"]["tmp_name"]) === false)
+                $error = true;
+        }
+        else {
+            echo "File was not uploaded. The maximum allowed size might have been exceeded.";
             $error = true;
+        }
     }
     if (!$error) {
         $sql = "INSERT INTO t_status(title";

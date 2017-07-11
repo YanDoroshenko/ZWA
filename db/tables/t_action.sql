@@ -1,15 +1,20 @@
 CREATE TABLE t_action (
-  id            INT                AUTO_INCREMENT,
-  task          INT,
-  source_status INT,
-  target_status INT,
-  actor         INT,
-  timepoint     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  description   VARCHAR(1000),
+  id              INT                AUTO_INCREMENT,
+  task            INT       NOT NULL,
+  source_priority INT,
+  target_priority INT,
+  source_status   INT,
+  target_status   INT,
+  actor           INT,
+  assignee        INT,
+  timepoint       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  description     VARCHAR(1000),
   PRIMARY KEY (id),
   FOREIGN KEY (task) REFERENCES t_task (id),
   FOREIGN KEY (source_status) REFERENCES t_status (id),
   FOREIGN KEY (target_status) REFERENCES t_status (id),
   FOREIGN KEY (actor) REFERENCES t_user (id),
-  CHECK (source_status != t_action.target_status OR description IS NOT NULL)
+  FOREIGN KEY (assignee) REFERENCES t_user (id),
+  CHECK (source_priority IS NULL OR source_priority >= 1 AND source_priority <= 10),
+  CHECK (target_priority IS NULL OR target_priority >= 1 AND target_priority <= 10)
 );

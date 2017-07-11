@@ -23,7 +23,6 @@ else {
 
 if (isset($task) && isset($_POST['btn-save'])) {
     if (
-        $_POST['comment'] ||
         $_POST['priority'] != $task['priority'] ||
         $_POST['status'] != $task['status_id'] ||
         $_POST['assignee'] != $task['assignee_id']
@@ -31,7 +30,6 @@ if (isset($task) && isset($_POST['btn-save'])) {
         $sql_task = "UPDATE t_task SET ";
         $task_types = "";
         $task_values = [];
-
         $sql_action = "INSERT INTO t_action (task, actor";
         if ($_POST['priority'] != $task['priority']) {
             $sql_task .= "priority = ?";
@@ -53,6 +51,7 @@ if (isset($task) && isset($_POST['btn-save'])) {
             if ($_POST['assignee'] === '')
                 $sql_task .= "assignee = NULL";
             else {
+                $sql_task .= "assignee = ?";
                 $task_types .= "i";
                 $task_values[] = $_POST['assignee'];
             }
@@ -61,16 +60,12 @@ if (isset($task) && isset($_POST['btn-save'])) {
         if ($_POST['comment']) {
             $sql_action .= ", description";
         }
-
         $task_types .= "i";
         $task_values[] = $id;
         $sql_task .= " WHERE id = ?";
-
         $sql_action .= ") VALUES (?, ?";
-
         $action_types = "ii";
         $action_values = [$task['id'], $_SESSION['user']];
-
         if ($_POST['priority'] != $task['priority']) {
             $sql_action .= ", ?, ?";
             $action_types .= "ii";
@@ -97,9 +92,9 @@ if (isset($task) && isset($_POST['btn-save'])) {
         $sql_action .= ")";
         $task_query = $db->prepare($sql_task);
         $action_query = $db->prepare($sql_action);
-
         if (!$task_query || !$action_query) {
-            echo "Something went wrong:<br/>";
+            echo $sql_task;
+            echo "Malformed query:<br/>";
             echo $db->error . "<br/>";
             if (!$task_query)
                 echo $action_query->error . "<br/>";
@@ -112,9 +107,29 @@ if (isset($task) && isset($_POST['btn-save'])) {
             if ($task_query->execute() && $action_query->execute())
                 header("Location: task_detail.php?id=" . $id);
             else {
-                echo "Something went wrong:<br/>";
+                echo "DB error:<br/>";
                 echo $db->error . "<br/>";
                 echo $task_query->error . "<br/>";
+                echo $action_query->error . "<br/>";
+            }
+        }
+    }
+    elseif ($_POST['comment']) {
+        $sql_action = "INSERT INTO t_action (task, actor, description) VALUES (?, ?, ?)";
+        $action_query = $db->prepare($sql_action);
+
+        if (!$action_query) {
+            echo "Malformed query:<br/>";
+            echo $db->error . "<br/>";
+            echo $action_query->error . "<br/>";
+        }
+        else {
+            $action_query->bind_param("iis", $task['id'], $_SESSION['user'], $_POST['comment']);
+            if ($action_query->execute())
+                header("Location: task_detail.php?id=" . $id);
+            else {
+                echo "DB error:<br/>";
+                echo $db->error . "<br/>";
                 echo $action_query->error . "<br/>";
             }
         }

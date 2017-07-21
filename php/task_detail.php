@@ -208,6 +208,26 @@ if (isset($task) && isset($_POST['btn-save'])) {
         <br/>
         <button type="submit" name="btn-save">Save task</button>
     </form>
+    <br/>
+
+    <?php
+    $actions_sql = "SELECT source_priority, target_priority, source_status, target_priority, actor, assignee, timepoint, description FROM t_action WHERE task = ?";
+    $actions_query = $db->prepare($actions_sql);
+    $actions_query->bind_param("i", $id);
+    if (!$actions_query || !$actions_query->execute()) {
+        echo $db->error;
+    }
+    else {
+        $actions = $actions_query->get_result();
+        while ($action = $actions->fetch_assoc()) {
+            foreach ($action as $k => $v)
+                if ($v)
+                    echo $k . " " . $v . " ";
+            echo "<br/>";
+        }
+    }
+    ?>
+
     </body>
     </html>
 <?php ob_end_flush(); ?>

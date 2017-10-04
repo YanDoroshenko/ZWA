@@ -56,8 +56,9 @@ if (isset($_POST['btn-signup'])) {
     <!DOCTYPE html>
     <html>
     <head>
+        <title>TITS - Signup</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Sign up</title>
+        <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
     </head>
     <body>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">

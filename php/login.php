@@ -52,9 +52,9 @@ if (isset($_POST['btn-login'])) {
 ?>
     <!DOCTYPE html>
     <html>
-    <head>
+    <head><title>TITS - Login</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Log in</title>
+        <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
     </head>
     <body>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">

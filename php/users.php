@@ -1,6 +1,5 @@
 <?php
 ob_start();
-include("header.php");
 session_start();
 require_once 'db.php';
 
@@ -17,12 +16,15 @@ $users = $query->get_result();
     <!DOCTYPE html>
     <html>
     <head>
+        <title>TITS - Users</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Users</title>
+        <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
     </head>
     <body>
 
     <?php
+    include("header.php");
+
     while ($user = $users->fetch_assoc())
         echo $user['id'] . " " . $user['login'] . " " . $user['name'] . "<br/>";
     ?>

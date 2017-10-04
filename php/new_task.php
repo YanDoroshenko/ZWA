@@ -1,6 +1,5 @@
 <?php
 ob_start();
-include("header.php");
 session_start();
 require_once 'db.php';
 
@@ -61,10 +60,13 @@ if (isset($_POST['btn-save'])) {
     <!DOCTYPE html>
     <html>
     <head>
+        <title>TITS - New task</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>New task</title>
+        <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
     </head>
     <body>
+
+    <?php include("header.php"); ?>
 
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <input type="number" name="priority" min="1" max="10" title="Priority" value="5">

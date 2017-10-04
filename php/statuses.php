@@ -1,6 +1,5 @@
 <?php
 ob_start();
-include("header.php");
 session_start();
 require_once 'db.php';
 
@@ -22,12 +21,15 @@ else {
     <!DOCTYPE html>
     <html>
     <head>
+        <title>TITS - Statuses</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Statuses</title>
+        <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
     </head>
     <body>
 
     <?php
+    include("header.php");
+
     if (isset($statuses))
         while ($status = $statuses->fetch_assoc()) {
             if (isset($status['icon_path']))

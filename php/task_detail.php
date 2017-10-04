@@ -1,6 +1,5 @@
 <?php
 ob_start();
-include("header.php");
 session_start();
 require_once 'db.php';
 
@@ -140,10 +139,13 @@ if (isset($task) && isset($_POST['btn-save'])) {
     <!DOCTYPE html>
     <html>
     <head>
+        <title>TITS - Task <?php echo $id ?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Task detail</title>
+        <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
     </head>
     <body>
+
+    <?php include("header.php"); ?>
 
     <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . "?id=" . $id; ?>">
 

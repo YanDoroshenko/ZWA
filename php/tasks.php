@@ -1,6 +1,5 @@
 <?php
 ob_start();
-include("header.php");
 session_start();
 require_once 'db.php';
 
@@ -22,12 +21,15 @@ else {
     <!DOCTYPE html>
     <html>
     <head>
+        <title>TITS - Tasks</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Tasks</title>
+        <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
     </head>
     <body>
 
     <?php
+    include("header.php");
+
     if (isset($tasks))
         while ($task = $tasks->fetch_assoc()) {
             echo "<a href=task_detail.php?id=" . $task['id'] . ">" . $task['id'] . "</a> ";

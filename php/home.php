@@ -1,6 +1,5 @@
 <?php
 ob_start();
-include("header.php");
 session_start();
 require_once 'db.php';
 
@@ -18,12 +17,14 @@ $userRow = $query->get_result()->fetch_assoc();
     <!DOCTYPE html>
     <html>
     <head>
+        <title>TITS - Home</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Welcome - <?php echo $userRow['name']; ?></title>
+        <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
     </head>
     <body>
-
-    <h1>Logged in</h1>
+    <?php include("header.php"); ?>
+    <h1>Temporal Issue Tracking System</h1>
+    <h2>Welcome, <?php echo $userRow['name'] ?></h2>
 
     </body>
     </html>

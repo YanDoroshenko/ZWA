@@ -1,6 +1,5 @@
 <?php
 ob_start();
-include("header.php");
 session_start();
 require_once 'db.php';
 
@@ -100,10 +99,13 @@ if (isset($_POST['btn-save'])) {
     <!DOCTYPE html>
     <html>
     <head>
+        <title>TITS - New status</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>New status</title>
+        <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
     </head>
     <body>
+
+    <?php include("header.php"); ?>
 
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
         <input

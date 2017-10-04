@@ -174,7 +174,7 @@ if (isset($task) && isset($_POST['btn-save'])) {
             }
             else
                 echo $task['status'] . " ";
-            echo '<img src="' . $task['icon'] . '" width=15pt/>';
+            echo '<img src="' . $task['icon'] . '" alt="" width=15pt/>';
             echo $task['reporter'];
             if ($_SESSION['user'] == $task['reporter_id']) {
                 echo '<select name="assignee" title="Assignee">';

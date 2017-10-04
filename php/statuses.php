@@ -31,7 +31,7 @@ else {
     if (isset($statuses))
         while ($status = $statuses->fetch_assoc()) {
             if (isset($status['icon_path']))
-                echo "<img src=\"" . $status['icon_path'] . "\" width=25pt/>";
+                echo "<img src=\"" . $status['icon_path'] . "\" alt=\"" . $status['title'] . "\" width=25pt/>";
             echo $status['title'] . " ";
             echo $status['description'] . " ";
             echo $status['final'] . " ";

@@ -4,7 +4,7 @@ CREATE TABLE t_task (
   description VARCHAR(255),
   parent      INT,
   created     TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  deadline    TIMESTAMP,
+  deadline    TIMESTAMP   NULL,
   priority    INT         NOT NULL DEFAULT 5,
   status      INT         NOT NULL,
   reporter    INT         NOT NULL,

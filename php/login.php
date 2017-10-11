@@ -29,7 +29,7 @@ if (isset($_POST['btn-login'])) {
     // if there's no error, continue to login
     if (!$error) {
 
-        $hashedPassword = hash('sha512', $password, $login);
+        $hashedPassword = hash($password, PASSWORD_DEFAULT, ['salt' => 'kjihgfedcba' . $login . 'abcdefghijk']);
 
         $query = mysqli_prepare($db, "SELECT id FROM t_user WHERE login = ? AND password_hash = ?");
         $query->bind_param("ss", $login, $hashedPassword);

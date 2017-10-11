@@ -32,7 +32,7 @@ if (isset($_POST['btn-signup'])) {
         echo "Please enter password.";
     }
 
-    $hashedPassword = hash('sha512', $password, $login);
+    $hashedPassword = hash($password, PASSWORD_DEFAULT, ['salt' => 'kjihgfedcba' . $login . 'abcdefghijk']);
 
     if (!$error) {
 

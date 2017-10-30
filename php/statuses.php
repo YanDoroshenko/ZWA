@@ -29,7 +29,7 @@ else {
     $offset = 0;
 }
 
-$from = $offset + 1;
+$from = min($count, $offset + 1);
 $to = min($count, $offset + $page_size);
 
 $query = $db->prepare("SELECT id, title, description, icon_path, final, system FROM t_status LIMIT $offset, $page_size");

@@ -63,12 +63,12 @@ if (isset($_POST['btn-login'])) {
 	</h1>
 	<h2>Log in</h2>
 
-	<input type="text" name="login" placeholder="Login"
+	<input type="text" name="login" placeholder="Login" required="required"
 	value="<?php
 if (isset($login))
     echo $login; ?>"
 	/>
-	<input type="password" name="password" placeholder="Password"/>
+	<input type="password" name="password" placeholder="Password" required="required"/>
 	<button type="submit" name="btn-login">Log in</button>
 
 	<a href="signup.php">Sign Up</a>

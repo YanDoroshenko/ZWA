@@ -8,9 +8,15 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
+if (isset($_POST['btn-filter']))
+    $filter = '%' . $_POST['filter'] . '%';
+else
+    $filter = '%';
+
 $page_size = 5;
 
-$count_query = $db->prepare("SELECT count(*) FROM t_user");
+$count_query = $db->prepare("SELECT count(*) FROM t_user WHERE login LIKE ? OR name LIKE ?");
+$count_query->bind_param("ss", $filter, $filter);
 if (!$count_query || !$count_query->execute()) {
     echo $query->error;
     echo $db->error;
@@ -32,7 +38,8 @@ else {
 $from = min($count, $offset + 1);
 $to = min($count, $offset + $page_size);
 
-$query = $db->prepare("SELECT id, login, name FROM t_user LIMIT $offset, $page_size");
+$query = $db->prepare("SELECT id, login, name FROM t_user WHERE login LIKE ? OR name LIKE ? LIMIT $offset, $page_size");
+$query->bind_param("ss", $filter, $filter);
 $query->execute();
 $users = $query->get_result();
 
@@ -45,12 +52,22 @@ $users = $query->get_result();
 	<link rel="icon" type="image/x-icon" href="../favicon.ico"/>
     </head>
     <body>
-
 <?php
 include("header.php");
+?>
 
-while ($user = $users->fetch_assoc())
-    echo $user['id'] . " " . $user['login'] . " " . $user['name'] . "<br/>";
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<input type="text" name="filter" placeholder="Filter"
+	value="<?php
+if (isset($filter))
+    echo str_replace("%", "", $filter); ?>"
+	/>
+	<button type="submit" name="btn-filter">Filter</button>
+    </form>
+
+<?php
+    while ($user = $users->fetch_assoc())
+	echo $user['id'] . " " . $user['login'] . " " . $user['name'] . "<br/>";
 if ($from > 1)
     echo "<a href=\"users.php?page=" . intval($page - 1) . "\">Previous page<a/>";
 if ($to < $count)

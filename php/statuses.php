@@ -8,9 +8,15 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
+if (isset($_POST['btn-filter']))
+    $filter = '%' . $_POST['filter'] . '%';
+else
+    $filter = '%';
+
 $page_size = 5;
 
-$count_query = $db->prepare("SELECT count(*) FROM t_status");
+$count_query = $db->prepare("SELECT count(*) FROM t_status WHERE title LIKE ? OR description LIKE ?");
+$count_query->bind_param("ss", $filter, $filter);
 if (!$count_query || !$count_query->execute()) {
     echo $query->error;
     echo $db->error;
@@ -32,7 +38,8 @@ else {
 $from = min($count, $offset + 1);
 $to = min($count, $offset + $page_size);
 
-$query = $db->prepare("SELECT id, title, description, icon_path, final, system FROM t_status LIMIT $offset, $page_size");
+$query = $db->prepare("SELECT id, title, description, icon_path, final, system FROM t_status WHERE title LIKE ? OR description LIKE ? LIMIT $offset, $page_size");
+$query->bind_param("ss", $filter, $filter);
 if (!$query || !$query->execute()) {
     echo $query->error;
     echo $db->error;
@@ -55,19 +62,27 @@ else {
 include("header.php");
 ?>
     <a href="new_status.php">New status</a>
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<input type="text" name="filter" placeholder="Filter"
+	value="<?php
+if (isset($filter))
+    echo str_replace("%", "", $filter); ?>"
+	/>
+	<button type="submit" name="btn-filter">Filter</button>
+    </form>
 <br/>
 <?php
-if (isset($statuses))
-    while ($status = $statuses->fetch_assoc()) {
-	if (isset($status['icon_path']))
-	    echo "<img src=\"" . $status['icon_path'] . "\" alt=\"" . $status['title'] . "\" width=25pt/>";
-	echo $status['title'] . " ";
-	echo $status['description'] . " ";
-	echo $status['final'] . " ";
-	if (!$status['system'])
-	    echo "<a href=delete_status.php?id=" . $status['id'] . ">X</a>";
-	echo "<br/>";
-    }
+    if (isset($statuses))
+	while ($status = $statuses->fetch_assoc()) {
+	    if (isset($status['icon_path']))
+		echo "<img src=\"" . $status['icon_path'] . "\" alt=\"" . $status['title'] . "\" width=25pt/>";
+	    echo $status['title'] . " ";
+	    echo $status['description'] . " ";
+	    echo $status['final'] . " ";
+	    if (!$status['system'])
+		echo "<a href=delete_status.php?id=" . $status['id'] . ">X</a>";
+	    echo "<br/>";
+	}
 if ($from > 1)
     echo "<a href=\"statuses.php?page=" . intval($page - 1) . "\">Previous page<a/>";
 if ($to < $count)

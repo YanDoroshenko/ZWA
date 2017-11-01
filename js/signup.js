@@ -32,6 +32,10 @@ password1.addEventListener("blur", (e) => {
     }
 });
 
+const password2 = document.getElementById("password2");
+password2.removeAttribute("required");
+password2.removeAttribute("pattern");
+
 password2.addEventListener("blur", (e) => {
     if (password2.value != password1.value) {
         password2.classList.add("incorrect");

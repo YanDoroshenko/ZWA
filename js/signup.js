@@ -44,7 +44,7 @@ password2.addEventListener("blur", (e) => {
     }
 });
 
-const form = document.getElementById("form");
+const form = document.getElementById("signup");
 form.addEventListener("submit", (e) => {
     if (login.value.search(/^[a-zA-Z]+[a-zA-Z0-9]*/) == -1) {
         e.preventDefault();

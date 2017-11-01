@@ -75,7 +75,7 @@ if (isset($_POST['btn-signup'])) {
     <body>
     <form method="post" 
           action="<?php echo $_SERVER['PHP_SELF']; ?>"
-          id="form">
+          id="signup">
         <h2>Sign Up</h2>
 
         <input type="text" name="name" placeholder="Name"

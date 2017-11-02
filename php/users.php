@@ -57,6 +57,7 @@ include("header.php");
 ?>
 
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<label for="filter">Filter</label>
 	<input type="text" name="filter" placeholder="Filter"
 	value="<?php
 if (isset($filter))

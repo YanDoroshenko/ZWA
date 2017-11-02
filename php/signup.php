@@ -81,12 +81,14 @@ if (isset($_POST['btn-signup'])) {
         <a href="login.php">Log in</a>
 <br/>
 
+<label for="name">Name</label>
         <input type="text" name="name" placeholder="Name"
         value="<?php
 if (isset($name))
     echo $name ?>"/>
 <br/>
 
+<label for="name">Name</label>
         <input  type="text" 
                 name="login" 
                 id="login"
@@ -99,6 +101,7 @@ if (isset($name))
         <label class="feedback" id="login-feedback"></label>
 <br/>
 
+<label for="password2">Password</label>
         <input type="password" 
                name="password1"  
                id="password1"  
@@ -107,6 +110,7 @@ if (isset($name))
         <label class="feedback" id="password1-feedback"></label>
 <br/>
 
+<label for="password2">Password confirmation</label>
         <input type="password" 
                name="password2"  
                id="password2"

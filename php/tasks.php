@@ -27,7 +27,7 @@ else
 if( isset($_GET{'page'} ) ) {
     $page = $_GET{'page'};
     if ($page <= 0)
-	$page = 1;
+        $page = 1;
     $offset = $page_size * ($page - 1);
 }
 else {
@@ -52,9 +52,9 @@ else {
     <!DOCTYPE html>
     <html>
     <head>
-	<title>TITS - Tasks</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<link rel="icon" type="image/x-icon" href="../favicon.ico"/>
+        <title>TITS - Tasks</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
     </head>
     <body>
 
@@ -63,25 +63,26 @@ include("header.php");
 ?>
     <a href="new_task.php">New task</a>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<input type="text" name="filter" placeholder="Filter"
-	value="<?php
+<label for="filter">Filter</label>
+        <input type="text" name="filter" placeholder="Filter"
+        value="<?php
 if (isset($filter))
     echo str_replace("%", "", $filter); ?>"
-	/>
-	<button type="submit" name="btn-filter">&#x1F50D;</button>
+        />
+        <button type="submit" name="btn-filter">&#x1F50D;</button>
     </form>
 <br/>
 <?php
     if (isset($tasks))
-	while ($task = $tasks->fetch_assoc()) {
-	    echo "<a href=task_detail.php?id=" . $task['id'] . ">" . $task['id'] . "</a> ";
-	    echo $task['name'] . " ";
-	    echo $task['priority'] . " ";
-	    echo $task['status'] . " ";
-	    echo $task['reporter'] . " ";
-	    echo $task['assignee'] . " ";
-	    echo "<br/>";
-	}
+        while ($task = $tasks->fetch_assoc()) {
+            echo "<a href=task_detail.php?id=" . $task['id'] . ">" . $task['id'] . "</a> ";
+            echo $task['name'] . " ";
+            echo $task['priority'] . " ";
+            echo $task['status'] . " ";
+            echo $task['reporter'] . " ";
+            echo $task['assignee'] . " ";
+            echo "<br/>";
+        }
 if ($from > 1)
     echo "<a href=\"tasks.php?page=" . intval($page - 1) . "\">Previous page<a/>";
 if ($to < $count)

@@ -75,31 +75,35 @@ if (isset($_POST['btn-save'])) {
     <?php include("header.php"); ?>
 
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<label for="priority">Priority</label>
         <input type="number" name="priority" min="1" max="10" title="Priority" value="5">
+<label for="assignee">Assignee</label>
         <select name="assignee" title="Assignee">
-            <?php
-            // List users
-            echo "<option value=''>None</option>";
-            $query = $db->prepare("SELECT id, login, name FROM t_user");
-            if ($query->execute()) {
-                $assignees = $query->get_result();
-                while ($assignee = $assignees->fetch_assoc()) {
-                    $displayName = $assignee['name'] ? $assignee['name'] . " (" . $assignee['login'] . ")" : $assignee['login'];
-                    echo "<option value=\"" . $assignee['id'] . "\"\">" . $displayName . "</option>";
-                }
-            }
-            else {
-                echo "Something went wrong:<br/>";
-                echo $db->error . "<br/>";
-                echo $query->error . "<br/>";
-            }
-            ?>
+<?php
+// List users
+echo "<option value=''>None</option>";
+$query = $db->prepare("SELECT id, login, name FROM t_user");
+if ($query->execute()) {
+    $assignees = $query->get_result();
+    while ($assignee = $assignees->fetch_assoc()) {
+        $displayName = $assignee['name'] ? $assignee['name'] . " (" . $assignee['login'] . ")" : $assignee['login'];
+        echo "<option value=\"" . $assignee['id'] . "\"\">" . $displayName . "</option>";
+    }
+}
+else {
+    echo "Something went wrong:<br/>";
+    echo $db->error . "<br/>";
+    echo $query->error . "<br/>";
+}
+?>
         </select>
+<label for="name">Name</label>
         <input
                 type="text"
                 name="name"
                 placeholder="Task name"
                 title="Name"/>
+<label for="description">Description</label>
         <input
                 type="text"
                 name="description"

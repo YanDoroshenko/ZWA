@@ -115,21 +115,25 @@ if (isset($_POST['btn-save'])) {
     <?php include("header.php"); ?>
 
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
+<label for="title">Title</label>
         <input
                 type="text"
                 name="title"
                 placeholder="Status title"
                 title="Name"/>
+<label for="title">Description</label>
         <input
                 type="text"
                 name="description"
                 placeholder="Status description"
                 title="Name"/>
+<label for="title">Final</label>
         <input
                 type="checkbox"
                 name="final"
                 title="Task can't be modified after this status is assigned"
                 value="y">
+<label for="title">Icon</label>
         <input type="file" name="iconUpload">
         <button type="submit" name="btn-save">Save status</button>
     </form>

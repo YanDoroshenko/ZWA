@@ -77,11 +77,15 @@ if (isset($_POST['btn-signup'])) {
           action="<?php echo $_SERVER['PHP_SELF']; ?>"
           id="signup">
         <h2>Sign Up</h2>
+<br/>
+        <a href="login.php">Log in</a>
+<br/>
 
         <input type="text" name="name" placeholder="Name"
         value="<?php
 if (isset($name))
     echo $name ?>"/>
+<br/>
 
         <input  type="text" 
                 name="login" 
@@ -92,22 +96,27 @@ if (isset($name))
                 value="<?php
     if (isset($login))
         echo $login ?>"/>
+        <label class="feedback" id="login-feedback"></label>
+<br/>
 
         <input type="password" 
                name="password1"  
                id="password1"  
                required="required"
                placeholder=" Password"/>
+        <label class="feedback" id="password1-feedback"></label>
+<br/>
 
         <input type="password" 
                name="password2"  
                id="password2"
                required="required"
                placeholder="Password confirmation"/>
+        <label class="feedback" id="password2-feedback"></label>
+<br/>
 
         <button type="submit" name="btn-signup">Sign Up</button>
-
-        <a href="login.php">Log in</a>
+<br/>
 
     </form>
     </body>

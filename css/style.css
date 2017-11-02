@@ -1,6 +1,17 @@
-.correct {
+#signup > input,button {
+    width: 30%;
+}
+input.correct {
     border: 2px solid green;
 }
-.incorrect {
+input.incorrect {
     border: 2px solid red;
+}
+label.correct {
+    display: inline;
+    color: green;
+}
+label.incorrect {
+    display: inline;
+    color: red;
 }

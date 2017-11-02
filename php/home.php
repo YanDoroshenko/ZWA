@@ -3,12 +3,12 @@ ob_start();
 session_start();
 require_once 'db.php';
 
-// if session is not set this will redirect to login page
+// Redirect unauthorized user to login
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit;
 }
-// select loggedin users detail
+// select authorized user's detail
 $query = $db->prepare("SELECT id, login, name FROM t_user WHERE id = ?");
 $query->bind_param("i", $_SESSION['user']);
 $query->execute();

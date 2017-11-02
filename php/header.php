@@ -1,3 +1,4 @@
+<!-- Common header -->
 <header>
     <a href="home.php">Home</a>
     <a href="tasks.php">Tasks</a>

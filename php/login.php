@@ -3,6 +3,7 @@ ob_start();
 session_start();
 require_once 'db.php';
 
+// If authorized, proceed to home
 if (isset($_SESSION['user'])) {
     header("Location: home.php");
     exit;
@@ -10,12 +11,14 @@ if (isset($_SESSION['user'])) {
 
 $error = false;
 
+// Form processing
 if (isset($_POST['btn-login'])) {
 
     $login = $_POST['login'];
 
     $password = $_POST['password'];
 
+    // Validation
     if (empty($login)) {
 	$error = true;
 	echo "Please enter your login.";
@@ -31,6 +34,7 @@ if (isset($_POST['btn-login'])) {
 
 	$hashedPassword = password_hash($password, PASSWORD_DEFAULT, ['salt' => 'kjihgfedcba' . $login . 'abcdefghijk']);
 
+        // Check the credentials with the database
 	$query = mysqli_prepare($db, "SELECT id FROM t_user WHERE login = ? AND password_hash = ?");
 	$query->bind_param("ss", $login, $hashedPassword);
 	$query->execute();
@@ -38,6 +42,7 @@ if (isset($_POST['btn-login'])) {
 	$row = mysqli_fetch_assoc($result);
 	$count = mysqli_num_rows($result);
 
+        // If OK proceed to home
 	if ($count == 1) {
 	    $_SESSION['user'] = $row['id'];
 	    header("Location: home.php");

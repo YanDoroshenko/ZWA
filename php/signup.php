@@ -1,6 +1,8 @@
 <?php
 ob_start();
 session_start();
+
+// If authorized proceed to home
 if (isset($_SESSION['user']) != "") {
     header("Location: home.php");
 }
@@ -8,6 +10,7 @@ include_once 'db.php';
 
 $error = false;
 
+// Process form
 if (isset($_POST['btn-signup'])) {
 
     $name = $_POST['name'];
@@ -17,6 +20,7 @@ if (isset($_POST['btn-signup'])) {
     $password1 = $_POST['password1'];
     $password2 = $_POST['password2'];
 
+    // Validation
     if (empty($password1)) {
         $error = true;
         echo "Please enter password.";
@@ -40,9 +44,9 @@ if (isset($_POST['btn-signup'])) {
             echo "Provided login is already in use.";
         }
 
-
         $hashedPassword = password_hash($password1, PASSWORD_DEFAULT, ['salt' => 'kjihgfedcba' . $login . 'abcdefghijk']);
 
+        // If OK, save user to DB
         if (!$error) {
 
             $query = $db->prepare("INSERT INTO t_user(login, password_hash, name) VALUES(?, ?, ?)");

@@ -3,6 +3,7 @@ ob_start();
 session_start();
 require_once 'db.php';
 
+// Redirect unauthorized user to login
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit;
@@ -10,6 +11,7 @@ if (!isset($_SESSION['user'])) {
 
 $error = false;
 
+// Processing form
 if (isset($_POST['btn-save'])) {
 
     define("INITIAL_STATUS", 1);
@@ -18,6 +20,7 @@ if (isset($_POST['btn-save'])) {
     $name = $_POST['name'];
     $reporter = (int)$_SESSION['user'];
 
+    // Validation
     if (empty($name)) {
         $error = true;
         echo "Please enter task name.";
@@ -28,6 +31,7 @@ if (isset($_POST['btn-save'])) {
         echo "Please select priority.";
     }
 
+    // If OK, save task to DB
     if (!$error) {
         $sql = "INSERT INTO t_task(status, reporter";
         foreach ($_POST as $k => $v)
@@ -47,6 +51,8 @@ if (isset($_POST['btn-save'])) {
                 $values[] = $v;
             }
         $query->bind_param($types, ...$values);
+
+        // If OK proceed to tasks list
         if ($query->execute())
             header("Location: tasks.php");
         else {
@@ -72,6 +78,7 @@ if (isset($_POST['btn-save'])) {
         <input type="number" name="priority" min="1" max="10" title="Priority" value="5">
         <select name="assignee" title="Assignee">
             <?php
+            // List users
             echo "<option value=''>None</option>";
             $query = $db->prepare("SELECT id, login, name FROM t_user");
             if ($query->execute()) {

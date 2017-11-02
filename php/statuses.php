@@ -3,11 +3,13 @@ ob_start();
 session_start();
 require_once 'db.php';
 
+// Redirect unauthorized user to login
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit;
 }
 
+// Initialize filter and pagination
 if (isset($_POST['btn-filter']))
     $filter = '%' . $_POST['filter'] . '%';
 else
@@ -24,6 +26,7 @@ if (!$count_query || !$count_query->execute()) {
 else
     $count = $count_query->get_result()->fetch_array()[0];
 
+// Show the correct page
 if( isset($_GET{'page'} ) ) {
     $page = $_GET{'page'};
     if ($page <= 0)
@@ -35,9 +38,11 @@ else {
     $offset = 0;
 }
 
+// Page counters 
 $from = min($count, $offset + 1);
 $to = min($count, $offset + $page_size);
 
+// Find all the entries according to the filter and pagination
 $query = $db->prepare("SELECT id, title, description, icon_path, final, system FROM t_status WHERE title LIKE ? OR description LIKE ? LIMIT $offset, $page_size");
 $query->bind_param("ss", $filter, $filter);
 if (!$query || !$query->execute()) {
@@ -73,6 +78,7 @@ if (isset($filter))
     </form>
 <br/>
 <?php
+    // Show all the statuses got from DB
     if (isset($statuses))
         while ($status = $statuses->fetch_assoc()) {
             if (isset($status['icon_path']))

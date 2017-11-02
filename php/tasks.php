@@ -3,11 +3,13 @@ ob_start();
 session_start();
 require_once 'db.php';
 
+// Redirect unauthorized user to login
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit;
 }
 
+// Initialize filter and pagination
 if (isset($_POST['btn-filter']))
     $filter = '%' . $_POST['filter'] . '%';
 else
@@ -15,6 +17,7 @@ else
 
 $page_size = 5;
 
+// Count entries
 $count_query = $db->prepare("SELECT count(*) FROM t_task WHERE name LIKE ? OR description LIKE ?");
 $count_query->bind_param("ss", $filter, $filter);
 if (!$count_query || !$count_query->execute()) {
@@ -35,9 +38,11 @@ else {
     $offset = 0;
 }
 
+// Entry counters for the page
 $from = min($count, $offset + 1);
 $to = min($count, $offset + $page_size);
 
+// Find all the entries according to the filter and pagination
 $query = $db->prepare("SELECT t.id 'id', t.name 'name', priority, s.title 'status', r.login 'reporter', a.login 'assignee' FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id WHERE t.name LIKE ? OR t.description LIKE ? LIMIT $offset, $page_size");
 $query->bind_param("ss", $filter, $filter);
 if (!$query || !$query->execute()) {
@@ -73,6 +78,7 @@ if (isset($filter))
     </form>
 <br/>
 <?php
+    // Show all the tasks
     if (isset($tasks))
         while ($task = $tasks->fetch_assoc()) {
             echo "<a href=task_detail.php?id=" . $task['id'] . ">" . $task['id'] . "</a> ";

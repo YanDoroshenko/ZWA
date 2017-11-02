@@ -3,6 +3,7 @@ ob_start();
 session_start();
 require_once 'db.php';
 
+// Redirect unauthorized user to login
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit;
@@ -10,12 +11,14 @@ if (!isset($_SESSION['user'])) {
 
 $error = false;
 
+// Process form
 if (isset($_POST['btn-save'])) {
 
     $title = $_POST['title'];
     $description = $_POST['description'];
 
 
+    // Validation
     if (empty($title)) {
         $error = true;
         echo "Please enter status title.";
@@ -24,6 +27,7 @@ if (isset($_POST['btn-save'])) {
     if (isset($_POST['final']) && $_POST['final'] == 'y')
         $isFinal = true;
 
+    // Icon processing
     if (!empty($_FILES["iconUpload"]["name"])) {
         if (is_uploaded_file($_FILES["iconUpload"]["tmp_name"])) {
             foreach ($_FILES["iconUpload"] as $FILE) {
@@ -44,6 +48,7 @@ if (isset($_POST['btn-save'])) {
             $error = true;
         }
     }
+    // If OK save status to DB
     if (!$error) {
         $sql = "INSERT INTO t_status(title";
         if (isset($description))
@@ -85,6 +90,8 @@ if (isset($_POST['btn-save'])) {
             }
         }
         $query->bind_param($types, ...$values);
+
+        // If OK proceed to status list
         if ($query->execute()) {
             header("Location: statuses.php");
         }

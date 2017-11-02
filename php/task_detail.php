@@ -3,6 +3,7 @@ ob_start();
 session_start();
 require_once 'db.php';
 
+// Redirect unauthorized user to login
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit;
@@ -10,6 +11,7 @@ if (!isset($_SESSION['user'])) {
 
 $id = $_GET['id'];
 
+// Find taks in DB
 $task_query = $db->prepare("SELECT t.id 'id', t.name 'name', priority, t.description 'description', s.id 'status_id', s.title 'status', s.icon_path 'icon', r.id 'reporter_id',  r.login 'reporter', a.id 'assignee_id', a.login 'assignee' FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id WHERE t.id = ?");
 $task_query->bind_param("i", $id);
 if (!$task_query || !$task_query->execute()) {
@@ -20,6 +22,7 @@ else {
     $task = $task_query->get_result()->fetch_assoc();
 }
 
+// Process the form submit
 if (isset($task) && isset($_POST['btn-save'])) {
     if (
         $_POST['priority'] != $task['priority'] ||
@@ -150,6 +153,7 @@ if (isset($task) && isset($_POST['btn-save'])) {
     <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . "?id=" . $id; ?>">
 
         <?php
+// Show task details
         if (isset($task)) {
             echo $task['id'] . " ";
             echo $task['name'] . " ";
@@ -194,7 +198,7 @@ if (isset($task) && isset($_POST['btn-save'])) {
                     echo $db->error . "<br/>";
                     echo $action_query->error . "<br/>";
                 }
-                echo "</select >";
+                echo "</select>";
             }
             else
                 echo $task['assignee'] . " ";
@@ -212,6 +216,7 @@ if (isset($task) && isset($_POST['btn-save'])) {
     <br/>
 
     <?php
+// Show the history of the task
     $actions_sql = "SELECT source_priority, target_priority, source_status, target_priority, actor, assignee, timepoint, description FROM t_action WHERE task = ?";
     $actions_query = $db->prepare($actions_sql);
     $actions_query->bind_param("i", $id);

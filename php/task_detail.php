@@ -145,94 +145,119 @@ if (isset($task) && isset($_POST['btn-save'])) {
         <title>TITS - Task <?php echo $id ?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
     </head>
     <body>
 
     <?php include("header.php"); ?>
 
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . "?id=" . $id; ?>">
+    <form id="task-detail" method="post" action="<?php echo $_SERVER['PHP_SELF'] . "?id=" . $id; ?>">
 
-        <?php
+<?php
 // Show task details
-        if (isset($task)) {
-            echo $task['id'] . " ";
-            echo $task['name'] . " ";
-            if ($_SESSION['user'] == $task['reporter_id']) {
-                echo "<input type=\"number\" name=\"priority\" min=\"1\" max=\"10\" title=\"Priority\" value=\"" . $task['priority'] . "\">";
+if (isset($task)) {
+    echo "<h3 class=\"task-name\">" . $task['name'] . "</h3> " . $task["id"] . "<br/>";
+    echo "<h4 id=\"reporter\">Reporter:</h4> " . $task['reporter'] . "<br>";
+    if ($_SESSION['user'] == $task['reporter_id']) {
+        echo "
+<label for=\"priority\">Priority</label>
+<input type=\"number\" name=\"priority\" id=\"priority\" min=\"1\" max=\"10\" title=\"Priority\" value=\"" . $task['priority'] . "\"><br/>";
+    }
+    else
+        echo $task['priority'] . " ";
+    echo '<img class="task-status-icon" src="' . $task['icon'] . '" alt=""/><br/>';
+    if ($_SESSION['user'] == $task['reporter_id']) {
+        echo '<select id="status-selection" name="status" title="Status">';
+        $action_query = $db->prepare("SELECT id, title, icon_path FROM t_status");
+        if ($action_query->execute()) {
+            $statuses = $action_query->get_result();
+            while ($status = $statuses->fetch_assoc()) {
+                echo "<option value=\"" . $status['id'] . ($status['id'] == $task['status_id'] ? "\" selected>" : "\">") . $status['title'] . "</option>";
             }
-            else
-                echo $task['priority'] . " ";
-            if ($_SESSION['user'] == $task['reporter_id']) {
-                echo '<select name="status" title="Status">';
-                $action_query = $db->prepare("SELECT id, title, icon_path FROM t_status");
-                if ($action_query->execute()) {
-                    $statuses = $action_query->get_result();
-                    while ($status = $statuses->fetch_assoc()) {
-                        echo "<option value=\"" . $status['id'] . ($status['id'] == $task['status_id'] ? "\" selected>" : "\">") . $status['title'] . "</option>";
-                    }
-                }
-                else {
-                    echo "Something went wrong:<br/>";
-                    echo $db->error . "<br/>";
-                    echo $action_query->error . "<br/>";
-                }
-                echo "</select >";
-            }
-            else
-                echo $task['status'] . " ";
-            echo '<img src="' . $task['icon'] . '" alt="" width=15pt/>';
-            echo $task['reporter'];
-            if ($_SESSION['user'] == $task['reporter_id']) {
-                echo '<select name="assignee" title="Assignee">';
-                echo "<option value=''>None</option>";
-                $action_query = $db->prepare("SELECT id, login, name FROM t_user");
-                if ($action_query->execute()) {
-                    $statuses = $action_query->get_result();
-                    while ($status = $statuses->fetch_assoc()) {
-                        $displayName = $status['name'] ? $status['name'] . " (" . $status['login'] . ")" : $status['login'];
-                        echo "<option value=\"" . $status['id'] . ($status['id'] == $task['assignee_id'] ? "\" selected>" : "\">") . $displayName . "</option>";
-                    }
-                }
-                else {
-                    echo "Something went wrong:<br/>";
-                    echo $db->error . "<br/>";
-                    echo $action_query->error . "<br/>";
-                }
-                echo "</select>";
-            }
-            else
-                echo $task['assignee'] . " ";
-            echo $task['description'] . " ";
-            echo "<br/>";
         }
-        ?>
-        <input
+        else {
+            echo "Something went wrong:<br/>";
+            echo $db->error . "<br/>";
+            echo $action_query->error . "<br/>";
+        }
+        echo "</select><br/>";
+    }
+    else
+        echo $task['status'] . " ";
+    if ($_SESSION['user'] == $task['reporter_id']) {
+        echo '<select id="assignee" name="assignee" title="Assignee">';
+        echo "<option value=''>None</option>";
+        $action_query = $db->prepare("SELECT id, login, name FROM t_user");
+        if ($action_query->execute()) {
+            $statuses = $action_query->get_result();
+            while ($status = $statuses->fetch_assoc()) {
+                $displayName = $status['name'] ? $status['name'] . " (" . $status['login'] . ")" : $status['login'];
+                echo "<option value=\"" . $status['id'] . ($status['id'] == $task['assignee_id'] ? "\" selected>" : "\">") . $displayName . "</option>";
+            }
+        }
+        else {
+            echo "Something went wrong:<br/>";
+            echo $db->error . "<br/>";
+            echo $action_query->error . "<br/>";
+        }
+        echo "</select><br/>";
+    }
+    else
+        echo $task['assignee'] . " ";
+    echo "<br/>";
+    echo $task['description'];
+    echo "<br/>";
+}
+?>
+<label for="comment">Comment</label>
+        <textarea
+id="comment"  
                 name="comment"
                 placeholder="Your commentary"
-                title="Comment"/>
+                title="Comment">
+</textarea>
         <br/>
-        <button name="btn-save">Save task</button>
+        <button id="save" name="btn-save">&#x1F5AB;Save task</button>
     </form>
     <br/>
 
-    <?php
+<?php
 // Show the history of the task
-    $actions_sql = "SELECT source_priority, target_priority, source_status, target_priority, actor, assignee, timepoint, description FROM t_action WHERE task = ? ORDER BY timepoint";
-    $actions_query = $db->prepare($actions_sql);
-    $actions_query->bind_param("i", $id);
-    if (!$actions_query || !$actions_query->execute()) {
-        echo $db->error;
+$actions_sql = "SELECT source_priority, target_priority,  u1.login actor_l, u1.name actor_n, u2.login assignee_l, u2.name assignee_n , ss.title source_t, ts.title target_t,timepoint, a.description FROM t_action a LEFT JOIN t_user u1 ON a.actor = u1.id LEFT JOIN t_user u2 ON a.assignee = u2.id LEFT JOIN t_status ss ON a.source_status = ss.id LEFT JOIN t_status ts ON a.target_status = ts.id WHERE task = ? ORDER BY timepoint DESC";
+$actions_query = $db->prepare($actions_sql);
+echo $db->error;
+$actions_query->bind_param("i", $id);
+if (!$actions_query || !$actions_query->execute()) {
+    echo $db->error;
+}
+else {
+    $actions = $actions_query->get_result();
+    while ($action = $actions->fetch_assoc()) {
+        $source_priority = $action["source_priority"];
+        $target_priority = $action["target_priority"];
+        $source_status = $action["source_t"];
+        $target_status = $action["target_t"];
+        $actor_l = $action["actor_l"];
+        $actor_n = $action["actor_n"];
+        $assignee_l = $action["assignee_l"];
+        $assignee_n = $action["assignee_n"];
+        $timepoint = $action["timepoint"];
+        $description = $action["description"];
+
+        $action_str = "<div class=\"action\"><h4 class=\"author\">$actor_n($actor_l)</h4> on $timepoint"; 
+        if (isset($source_status) && isset($target_status))
+            $action_str .= "<p>Status change: from $source_status to $target_status</p>";
+        if (isset($source_priority) && isset($target_priority))
+            $action_str .= "<p>Priority change: from $source_priority to $target_priority</p>";
+        if (isset($assignee_l) && isset($assignee_n))
+            $action_str .= "<p>Assigned $assignee_n($assignee_l)</p>";
+        if (isset($description))
+            $action_str .= "<p>Comment: $description</p>";
+
+        echo $action_str . "</div>";
     }
-    else {
-        $actions = $actions_query->get_result();
-        while ($action = $actions->fetch_assoc()) {
-            foreach ($action as $k => $v)
-                if ($v)
-                    echo $k . " " . $v . " ";
-            echo "<br/>";
-        }
-    }
-    ?>
+}
+?>
 
     </body>
     </html>

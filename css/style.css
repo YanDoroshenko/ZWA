@@ -18,3 +18,41 @@ label.incorrect {
     display: inline;
     color: red;
 }
+div.action {
+    border: 1px solid #ddd;
+    margin: 0.1%;
+}
+h4.author {
+    display: inline;
+}
+h3.task-name {
+    display: inline;
+}
+img.task-status-icon {
+    float: right;
+    width: 50px;
+}
+input#priority {
+    float: left;
+}
+select#status-selection {
+    float: right;
+}
+h4#reporter {
+    display: inline;
+}
+select#assignee {
+    float: left;
+}
+textarea#comment {
+    float:left;
+    width: 80vw;
+}
+button#save {
+    margin-top: -20px;
+    float: right;
+    width: 100px;
+}
+form#task-detail {
+    margin-bottom: 10px;
+}

@@ -217,7 +217,7 @@ if (isset($task) && isset($_POST['btn-save'])) {
 
     <?php
 // Show the history of the task
-    $actions_sql = "SELECT source_priority, target_priority, source_status, target_priority, actor, assignee, timepoint, description FROM t_action WHERE task = ?";
+    $actions_sql = "SELECT source_priority, target_priority, source_status, target_priority, actor, assignee, timepoint, description FROM t_action WHERE task = ? ORDER BY timepoint";
     $actions_query = $db->prepare($actions_sql);
     $actions_query->bind_param("i", $id);
     if (!$actions_query || !$actions_query->execute()) {

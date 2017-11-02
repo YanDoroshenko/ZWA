@@ -109,34 +109,46 @@ if (isset($_POST['btn-save'])) {
         <title>TITS - New status</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
     </head>
     <body>
 
     <?php include("header.php"); ?>
 
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
-<label for="title">Title</label>
+    <form method="post" 
+        action="<?php echo $_SERVER['PHP_SELF']; ?>" 
+        id="new_status"
+        enctype="multipart/form-data">
+        <label for="title">Title</label>
         <input
+                required="required"
                 type="text"
                 name="title"
+                id="title"
                 placeholder="Status title"
                 title="Name"/>
+<label id="title-feedback"></label>
+<br/>
 <label for="title">Description</label>
         <input
                 type="text"
                 name="description"
                 placeholder="Status description"
-                title="Name"/>
+                title="Description"/>
+<br/>
 <label for="title">Final</label>
         <input
                 type="checkbox"
                 name="final"
                 title="Task can't be modified after this status is assigned"
                 value="y">
+<br/>
 <label for="title">Icon</label>
         <input type="file" name="iconUpload">
+<br/>
         <button type="submit" name="btn-save">Save status</button>
     </form>
     </body>
+    <script src="../js/new_status.js"></script>
     </html>
 <?php ob_end_flush(); ?>

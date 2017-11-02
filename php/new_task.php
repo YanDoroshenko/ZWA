@@ -69,14 +69,22 @@ if (isset($_POST['btn-save'])) {
         <title>TITS - New task</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
     </head>
     <body>
 
     <?php include("header.php"); ?>
 
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"
+id="new_task">
 <label for="priority">Priority</label>
-        <input type="number" name="priority" min="1" max="10" title="Priority" value="5">
+        <input 
+type="number" name="priority" 
+id="priority"
+required="required"
+min="1" max="10" title="Priority" value="5">
+    <label class="feedback" id="priority-feedback"></label>
+<br/>
 <label for="assignee">Assignee</label>
         <select name="assignee" title="Assignee">
 <?php
@@ -97,19 +105,26 @@ else {
 }
 ?>
         </select>
+<br/>
 <label for="name">Name</label>
         <input
                 type="text"
                 name="name"
+                id="name"
+                required="required"
                 placeholder="Task name"
                 title="Name"/>
+<label id="name-feedback"></label>
+<br/>
 <label for="description">Description</label>
         <input
                 type="text"
                 name="description"
                 placeholder="Task description"/>
+<br/>
         <button type="submit" name="btn-save">Save task</button>
     </form>
     </body>
+    <script src="../js/new_task.js"></script>
     </html>
 <?php ob_end_flush(); ?>

@@ -1,7 +1,8 @@
+// Login input validation
 const login = document.getElementById("login");
+const loginFeedback = document.getElementById("login-feedback");
 login.removeAttribute("required");
 login.removeAttribute("pattern");
-const loginFeedback = document.getElementById("login-feedback");
 
 login.addEventListener("blur", (e) => {
     if (login.value.search(/^[a-zA-Z]+[a-zA-Z0-9]*$/) != -1) {
@@ -20,10 +21,11 @@ login.addEventListener("blur", (e) => {
     }
 });
 
+// Password validation
 const password1 = document.getElementById("password1");
+const password1Feedback = document.getElementById("password1-feedback");
 password1.removeAttribute("required");
 password1.removeAttribute("pattern");
-const password1Feedback = document.getElementById("password1-feedback");
 
 password1.addEventListener("blur", (e) => {
     if (password1.value.search(/.{5,}/) != -1) {
@@ -42,10 +44,11 @@ password1.addEventListener("blur", (e) => {
     }
 });
 
+// Password confirmation input validation
 const password2 = document.getElementById("password2");
+const password2Feedback = document.getElementById("password2-feedback");
 password2.removeAttribute("required");
 password2.removeAttribute("pattern");
-const password2Feedback = document.getElementById("password2-feedback");
 
 password2.addEventListener("blur", (e) => {
     if (password2.value != password1.value) {
@@ -64,6 +67,7 @@ password2.addEventListener("blur", (e) => {
     }
 });
 
+// Entire form validation before submit
 const form = document.getElementById("signup");
 form.addEventListener("submit", (e) => {
     if (login.value.search(/^[a-zA-Z]+[a-zA-Z0-9]*/) == -1) {

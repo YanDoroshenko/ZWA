@@ -62,7 +62,7 @@ include("header.php");
 if (isset($filter))
     echo str_replace("%", "", $filter); ?>"
 	/>
-	<button type="submit" name="btn-filter">Filter</button>
+        <button type="submit" name="btn-filter">&#x1F50D;</button>
     </form>
 
 <?php

@@ -45,12 +45,12 @@ priority.addEventListener("blur", (e) => {
 // Entire form validation before submit
 const form = document.getElementById("new_task");
 form.addEventListener("submit", (e) => {
-    if (name.value) {
+    if (!name.value) {
         e.preventDefault();
         name.classList.add("incorrect");
         name.classList.remove("correct");
         nameFeedback.classList.add("incorrect");
         nameFeedback.classList.remove("correct");
-        nameFeedback.innerHTML = "\u2716 name should not be emptys";
+        nameFeedback.innerHTML = "\u2716 Name should not be empty";
     }
 });

@@ -20,6 +20,7 @@ $userRow = $query->get_result()->fetch_assoc();
         <title>TITS - Home</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
+        <link rel="stylesheet" type="text/css" href="../css/header.css">
     </head>
     <body>
     <?php include("header.php"); ?>

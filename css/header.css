@@ -19,10 +19,10 @@ header ul li {
 header ul li.menu:hover {
     background-color: #05f;
 }
-h3 {
+header ul li h3 {
     display: inline;
 }
-img {
+header ul li img {
     height: 0.9em;
 }
 header ul li a, h3 {

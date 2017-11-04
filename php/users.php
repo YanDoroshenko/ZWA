@@ -15,7 +15,7 @@ if (isset($_POST['btn-filter']))
 else
     $filter = '%';
 
-$page_size = 5;
+$page_size = 1;
 
 // Count entries
 $count_query = $db->prepare("SELECT count(*) FROM t_user WHERE login LIKE ? OR name LIKE ?");
@@ -30,7 +30,7 @@ else
 if( isset($_GET{'page'} ) ) {
     $page = $_GET{'page'};
     if ($page <= 0)
-	$page = 1;
+        $page = 1;
     $offset = $page_size * ($page - 1);
 }
 else {
@@ -51,37 +51,44 @@ $users = $query->get_result();
     <!DOCTYPE html>
     <html>
     <head>
-	<title>TITS - Users</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<link rel="icon" type="image/x-icon" href="../favicon.ico"/>
+        <title>TITS - Users</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="../css/header.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/users.css">
+        <link rel="stylesheet" type="text/css" href="../css/footer.css">
     </head>
     <body>
 <?php
 include("header.php");
 ?>
-
+<div id="content">
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <label for="filter">Filter</label>
-	<input type="text" name="filter" placeholder="Filter"
-	value="<?php
+        <input type="text" name="filter" placeholder="Filter"
+        value="<?php
 if (isset($filter))
     echo str_replace("%", "", $filter); ?>"
-	/>
+        />
         <button type="submit" name="btn-filter">&#x1F50D;</button>
     </form>
-
 <?php
     // Show all the users
     while ($user = $users->fetch_assoc())
-	echo $user['id'] . " " . $user['login'] . " " . $user['name'] . "<br/>";
-if ($from > 1)
-    echo "<a href=\"users.php?page=" . intval($page - 1) . "\">Previous page<a/>";
-if ($to < $count)
-    echo "<a href=\"users.php?page=" . intval($page + 1) . "\">Next page<a/>";
-echo "$from-$to/$count";
+        echo $user['id'] . " " . $user['login'] . " " . $user['name'] . "<br/>";
 ?>
-
+</div>
+<footer>
+<?php
+//Pagination
+if ($from > 1)
+    echo "<a id=\"prev\" class=\"pagination\" href=\"users.php?page=" . intval($page - 1) . "\">&#x25C4; Previous page<a/>";
+if ($to < $count)
+    echo "<a id=\"next\" class=\"pagination\" href=\"users.php?page=" . intval($page + 1) . "\">Next page &#x25BA;<a/>";
+echo "<h4 id=\"count\" class=\"pagination\">$from-$to/$count</h4>";
+?>
+</footer>
     </body>
     </html>
 <?php ob_end_flush(); ?>

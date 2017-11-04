@@ -61,12 +61,16 @@ else {
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="../css/header.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/statuses.css">
+        <link rel="stylesheet" type="text/css" href="../css/footer.css">
     </head>
     <body>
 
 <?php
 include("header.php");
 ?>
+<div id="content">
     <a href="new_status.php">New status</a>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <label for="filter">Filter</label>
@@ -91,13 +95,18 @@ if (isset($filter))
                 echo "<a href=delete_status.php?id=" . $status['id'] . ">X</a>";
             echo "<br/>";
         }
-if ($from > 1)
-    echo "<a href=\"statuses.php?page=" . intval($page - 1) . "\">Previous page<a/>";
-if ($to < $count)
-    echo "<a href=\"statuses.php?page=" . intval($page + 1) . "\">Next page<a/>";
-echo "$from-$to/$count";
 ?>
-
+</div>
+<footer>
+<?php
+//Pagination
+if ($from > 1)
+    echo "<a id=\"prev\" class=\"pagination\" href=\"statuses.php?page=" . intval($page - 1) . "\">&#x25C4; Previous page<a/>";
+if ($to < $count)
+    echo "<a id=\"next\" class=\"pagination\" href=\"statuses.php?page=" . intval($page + 1) . "\">Next page &#x25BA;<a/>";
+echo "<h4 id=\"count\" class=\"pagination\">$from-$to/$count</h4>";
+?>
+</footer>
     </body>
     </html>
 <?php ob_end_flush(); ?>

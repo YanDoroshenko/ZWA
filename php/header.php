@@ -6,7 +6,7 @@ require_once 'db.php';
 $query = $db->prepare("SELECT id, login, name FROM t_user WHERE id = ?");
 $query->bind_param("i", $_SESSION['user']);
 $query->execute();
-$user_name = $query->get_result()->fetch_assoc()['name'];
+$user = $query->get_result()->fetch_assoc();
 ?>
 <header>
 <ul>
@@ -26,8 +26,8 @@ $user_name = $query->get_result()->fetch_assoc()['name'];
         <a id="logout" href="logout.php?logout">Log Out</a>
     </li>
 <li class="right">
-    <h3 id="user-name">
-    &starf; <?php echo $user_name ?>
+<h3 id="user-name" title="Login: <?php echo $user['login']; ?>">
+    &starf; <?php echo $user['name'] ?>
     </h3>
 </li>
 </ul>

@@ -4,9 +4,12 @@ footer {
     right: 0;
     bottom: 0;
     height: 1.5em;
+    background-color: #cef;
 }
 .pagination {
-    margin: 0 1em 0 1em;
+    margin: 0.2em 1em 0.2em 1em;
+    text-decoration: none;
+    color: #333;
 }
 #prev {
     float: left;

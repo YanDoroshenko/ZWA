@@ -74,3 +74,6 @@ header ul li a, header ul li h3 {
 #avatar-header {
     height: 0.7em;
 }
+#context {
+    width: fit-content;
+}

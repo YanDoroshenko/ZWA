@@ -12,7 +12,7 @@ if (!isset($_SESSION['user'])) {
 $id = $_GET['id'];
 
 // Find taks in DB
-$task_query = $db->prepare("SELECT t.id 'id', t.name 'name', priority, t.description 'description', s.id 'status_id', s.title 'status', s.icon_path 'icon', r.id 'reporter_id',  r.login 'reporter', a.id 'assignee_id', a.login 'assignee' FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id WHERE t.id = ?");
+$task_query = $db->prepare("SELECT t.id 'id', t.name 'name', t.priority 'priority', t.deadline 'deadline', t.description 'description', s.id 'status_id', s.title 'status', s.icon_path 'icon', r.id 'reporter_id',  r.login 'reporter', a.id 'assignee_id', a.login 'assignee' FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id WHERE t.id = ?");
 $task_query->bind_param("i", $id);
 if (!$task_query || !$task_query->execute()) {
     echo $task_query->error;
@@ -27,7 +27,8 @@ if (isset($task) && isset($_POST['btn-save'])) {
     if (
         $_POST['priority'] != $task['priority'] ||
         $_POST['status'] != $task['status_id'] ||
-        $_POST['assignee'] != $task['assignee_id']
+        $_POST['assignee'] != $task['assignee_id'] ||
+        strtotime($_POST['deadline']) != strtotime($task['deadline'])
     ) {
         $sql_task = "UPDATE t_task SET ";
         $task_types = "";
@@ -38,6 +39,13 @@ if (isset($task) && isset($_POST['btn-save'])) {
             $task_types .= "i";
             $task_values[] = $_POST['priority'];
             $sql_action .= ", source_priority, target_priority";
+        }
+        if (strtotime($_POST['deadline']) != strtotime($task['deadline'])) {
+            if (!empty($task_values))
+                $sql_task .= ", ";
+            $sql_task .= "deadline = ?";
+            $task_types .= "s";
+            $task_values[] = date("Y-m-d", strtotime($_POST['deadline']));
         }
         if ($_POST['status'] != $task['status_id']) {
             if (!empty($task_values))
@@ -59,7 +67,7 @@ if (isset($task) && isset($_POST['btn-save'])) {
             }
             $sql_action .= ", assignee";
         }
-        if ($_POST['comment']) {
+        if ($_POST['comment'] || strtotime($_POST['deadline']) != strtotime($task['deadline']) || $_POST['assignee'] === '') {
             $sql_action .= ", description";
         }
         $task_types .= "i";
@@ -89,7 +97,22 @@ if (isset($task) && isset($_POST['btn-save'])) {
         if ($_POST['comment']) {
             $sql_action .= ", ?";
             $action_types .= "s";
-            $action_values[] = $_POST['comment'];
+            $comment = $_POST['comment'] . "<br/>";
+            if (strtotime($_POST['deadline']) != strtotime($task['deadline']))
+                $comment .= "Deadline changed from " . date("Y-m-d", strtotime($task['deadline'])) . " to " . $_POST['deadline'] . ".<br/>";
+            if ($task['assignee'] != $_POST['assignee'] && $_POST['assignee'] === '')
+                $comment .= "Task unassigned.";
+            $action_values[] = $comment;
+        }
+        else if (strtotime($_POST['deadline']) != strtotime($task['deadline']) || $task['assignee'] != $_POST['assignee'] && $_POST['assignee'] === '') {
+            $sql_action .= ", ?";
+            $action_types .= "s";
+            $comment = "";
+            if (strtotime($_POST['deadline']) != strtotime($task['deadline']))
+                $comment .= "Deadline changed from " . date("Y-m-d", strtotime($task['deadline'])) . " to " . $_POST['deadline'] . ".<br/>";
+            if ($task['assignee'] != $_POST['assignee'] && $_POST['assignee'] === '')
+                $comment .= "Task unassigned.";
+            $action_values[] = $comment;
         }
         $sql_action .= ")";
         $task_query = $db->prepare($sql_task);
@@ -151,7 +174,7 @@ if (isset($task) && isset($_POST['btn-save'])) {
     <body>
 
     <?php include("header.php"); ?>
-
+<div id="content">
     <form id="task-detail" method="post" action="<?php echo $_SERVER['PHP_SELF'] . "?id=" . $id; ?>">
 
 <?php
@@ -186,6 +209,14 @@ if (isset($task)) {
     else
         echo $task['status'] . " ";
     if ($_SESSION['user'] == $task['reporter_id']) {
+        echo '<label for="deadline">Deadline</label>';
+        if (!empty($task['deadline']))
+            $d = strtotime($task['deadline']);
+        else
+            $d = time();
+        echo '<input name="deadline" type="date" id="deadline" required="required" value="' . date("Y-m-d", $d) . '"/>';
+    }
+    if ($_SESSION['user'] == $task['reporter_id']) {
         echo '<select id="assignee" name="assignee" title="Assignee">';
         echo "<option value=''>None</option>";
         $action_query = $db->prepare("SELECT id, login, name FROM t_user");
@@ -212,7 +243,7 @@ if (isset($task)) {
 ?>
 <label for="comment">Comment</label>
         <textarea
-id="comment"  
+id="comment"
                 name="comment"
                 placeholder="Your commentary"
                 title="Comment">
@@ -245,7 +276,7 @@ else {
         $timepoint = $action["timepoint"];
         $description = $action["description"];
 
-        $action_str = "<div class=\"action\"><h4 class=\"author\">$actor_n($actor_l)</h4> on $timepoint"; 
+        $action_str = "<div class=\"action\"><h4 class=\"author\">$actor_n($actor_l)</h4> on $timepoint";
         if (isset($source_status) && isset($target_status))
             $action_str .= "<p>Status change: from $source_status to $target_status</p>";
         if (isset($source_priority) && isset($target_priority))
@@ -259,7 +290,7 @@ else {
     }
 }
 ?>
-
+</div>
     </body>
     </html>
 <?php ob_end_flush(); ?>

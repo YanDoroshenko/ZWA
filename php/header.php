@@ -25,8 +25,8 @@ $user = $query->get_result()->fetch_assoc();
     <li class="right menu edge">
         <a id="logout" href="logout.php?logout">Log Out</a>
     </li>
-<li class="right">
-<h3 id="user-name" title="Login: <?php echo $user['login']; ?>">
+<li id="user-name" class="right">
+<h3 title="Login: <?php echo $user['login']; ?>">
     &starf; <?php echo $user['name'] ?>
     </h3>
 </li>

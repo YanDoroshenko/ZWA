@@ -52,3 +52,6 @@ header ul li a, h3 {
 #logout {
     margin-left: 0.2em;
 }
+#user-name {
+    width: fit-content;
+}

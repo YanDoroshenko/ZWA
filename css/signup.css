@@ -24,6 +24,7 @@ span {
     right: 0;
 }
 #content form {
+    margin-top: 5em;
     margin-left: 42em;
 }
 #content form input, #content form label[for], #content form button {
@@ -61,4 +62,11 @@ header a {
 label.feedback {
     display: inline;
     vertical-align: 0.3em;
+}
+label#overall {
+    position: absolute;
+    bottom: 7em;
+    margin-left: 34em;
+    font-size: 125%;
+    font-family: sans-serif;
 }

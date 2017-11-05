@@ -41,7 +41,7 @@ if (isset($_POST['btn-signup'])) {
         $count = mysqli_num_rows($result);
         if ($count != 0) {
             $error = true;
-            echo "Provided login is already in use.";
+                echo '<label id="overall" class="incorrect feedback">Login ' . $login .' is already taken</label>';
         }
 
         $hashedPassword = password_hash($password1, PASSWORD_DEFAULT, ['salt' => 'kjihgfedcba' . $login . 'abcdefghijk']);
@@ -53,16 +53,14 @@ if (isset($_POST['btn-signup'])) {
             $query->bind_param("sss", $login, $hashedPassword, $name);
 
             if ($query->execute()) {
-                echo "Successfully registered, you may login now";
+                echo '<label id="overall" class="correct feedback">Successfully registered, you may login now</label>';
                 unset($name);
                 unset($login);
                 unset($password1);
                 unset($password2);
             }
             else {
-                echo $query->error . "<br/>";
-                echo $db->error . "<br/>";
-                echo "Something went wrong, try again later...";
+                echo '<label id="overall" class="incorrect feedback">Something went wrong with the database: ' . $db->error . '</label>';
             }
         }
     }

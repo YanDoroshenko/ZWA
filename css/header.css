@@ -76,4 +76,5 @@ header ul li a, header ul li h3 {
 }
 #context {
     width: fit-content;
+    border-left: 2px solid white;
 }

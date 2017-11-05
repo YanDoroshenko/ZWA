@@ -1,5 +1,5 @@
 <!-- Common header -->
-<?php 
+<?php
 ob_start();
 require_once 'db.php';
 
@@ -30,6 +30,19 @@ $user = $query->get_result()->fetch_assoc();
     &starf; <?php echo $user['name'] ?>
     </h3>
 </li>
+<?php
+if (isset($filter))
+    echo '
+<li id="search" class="right">
+<form method="post" action="' . $self . '">
+<label for="filter">Filter</label>
+        <input type="text" name="filter" placeholder="Filter"
+        value="' . str_replace("%", "", $filter) . '"
+        />
+        <button type="submit" name="btn-filter">&#x1F50D;</button>
+    </form>
+</li>';
+?>
 </ul>
 </header>
 <br/>

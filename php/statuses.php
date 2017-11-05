@@ -9,6 +9,9 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
+// For filter to know where to go after filtering
+$self = $_SERVER['PHP_SELF'];
+
 // Initialize filter and pagination
 if (isset($_POST['btn-filter']))
     $filter = '%' . $_POST['filter'] . '%';
@@ -72,15 +75,6 @@ include("header.php");
 ?>
 <div id="content">
     <a href="new_status.php">New status</a>
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<label for="filter">Filter</label>
-        <input type="text" name="filter" placeholder="Filter"
-        value="<?php
-if (isset($filter))
-    echo str_replace("%", "", $filter); ?>"
-        />
-        <button type="submit" name="btn-filter">&#x1F50D;</button>
-    </form>
 <br/>
 <?php
     // Show all the statuses got from DB

@@ -18,7 +18,7 @@ if (isset($_POST['btn-filter']))
 else
     $filter = '%';
 
-$page_size = 1;
+$page_size = 5;
 
 // Count entries
 $count_query = $db->prepare("SELECT count(*) FROM t_user WHERE login LIKE ? OR name LIKE ?");
@@ -69,8 +69,16 @@ include("header.php");
 <div id="content">
 <?php
     // Show all the users
-    while ($user = $users->fetch_assoc())
-        echo $user['id'] . " " . $user['login'] . " " . $user['name'] . "<br/>";
+    while ($user = $users->fetch_assoc()) {
+        echo "<article>
+            <img class='avatar' src='../img/avatar_blue.png'>
+<div class='user-details'>
+<h3>" . $user['name'] . "</h3>
+<h4>" . $user['login'] . "</h4>
+</div>
+</article>
+";
+    }
 ?>
 </div>
 <footer>

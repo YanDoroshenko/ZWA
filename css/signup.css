@@ -1,0 +1,64 @@
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #09f;
+    margin: 0;
+    height: 4em;
+}
+img#logo {
+    height: 3em;
+    margin: 0.4em;
+}
+span {
+    color: white;
+    font-family: sans-serif;
+    font-size: 250%;
+    vertical-align: 0.4em;
+}
+#content {
+    position: absolute;
+    top: 4em;
+    left: 0;
+    right: 0;
+}
+#content form {
+    margin-left: 42em;
+}
+#content form input, #content form label[for], #content form button {
+    margin: 0.5em;
+    display: inline;
+    color: #09f;
+    font-size: 200%;
+    font-family: sans-serif;
+}
+#content form input {
+    background-color: white;
+    border: 2px solid #adf;
+    padding: 0.5em;
+    width: 14em;
+    text-align: center;
+}
+#content form input::placeholder {
+    color: #cef;
+}
+#content form button {
+    border: 0;
+    color: white;
+    background-color: #09f;
+    padding: 0.5em;
+    width: 15.06em;
+}
+header a {
+    float: right;
+    margin-top: 0.4em;
+    margin-right: 1em;
+    color: white;
+    font-size: 150%;
+    text-decoration: none;
+}
+label.feedback {
+    display: inline;
+    vertical-align: 0.3em;
+}

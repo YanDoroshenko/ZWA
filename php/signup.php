@@ -74,25 +74,32 @@ if (isset($_POST['btn-signup'])) {
         <title>TITS - Signup</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-<link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/signup.css">
     </head>
     <body>
+<header>
+<img id="logo" src="../img/favicon.png"/>
+         <span>
+            Temporal Issue Tracking System
+        </span>
+        <a href="login.php">&#x26BF; Log in</a>
+</header>
+<div id="content">
     <form method="post" 
           action="<?php echo $_SERVER['PHP_SELF']; ?>"
           id="signup">
-        <h2>Sign Up</h2>
-<br/>
-        <a href="login.php">Log in</a>
-<br/>
 
 <label for="name">Name</label>
+<br/>
         <input type="text" name="name" placeholder="Name"
         value="<?php
 if (isset($name))
     echo $name ?>"/>
 <br/>
 
-<label for="name">Name</label>
+<label for="name">Login</label>
+<br/>
         <input  type="text" 
                 name="login" 
                 id="login"
@@ -106,6 +113,7 @@ if (isset($name))
 <br/>
 
 <label for="password2">Password</label>
+<br/>
         <input type="password" 
                name="password1"  
                id="password1"  
@@ -115,18 +123,19 @@ if (isset($name))
 <br/>
 
 <label for="password2">Password confirmation</label>
+<br/>
         <input type="password" 
                name="password2"  
                id="password2"
                required="required"
                placeholder="Password confirmation"/>
         <label class="feedback" id="password2-feedback"></label>
-<br/>
 
-        <button type="submit" name="btn-signup">Sign Up</button>
 <br/>
+        <button type="submit" name="btn-signup">Sign Up</button>
 
     </form>
+</div>
     </body>
 <script src="../js/signup.js"></script>
     </html>

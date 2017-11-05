@@ -2,10 +2,10 @@ label[for] {
     display: none;
 }
 input.correct {
-    border: 2px solid green;
+    border: 2px solid green !important;
 }
 input.incorrect {
-    border: 2px solid red;
+    border: 2px solid red !important;
 }
 label.correct {
     display: inline;

@@ -1,0 +1,20 @@
+#content * {
+    font-family: sans-serif;
+}
+h1#title {
+    color: #09f;
+}
+h1#title span {
+    vertical-align: 0.3em;
+}
+img#logo-home {
+    height: 1em;
+    margin: 0.2em;
+}
+h2#welcome, h3#notice {
+    margin-left: 0.3em;
+    color: #09f;
+}
+#welcome #name {
+    color: #333;
+}

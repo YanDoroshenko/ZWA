@@ -71,3 +71,6 @@ header ul li a, h3 {
 #user-name {
     width: fit-content;
 }
+#avatar-header {
+    height: 0.7em;
+}

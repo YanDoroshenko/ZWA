@@ -71,6 +71,7 @@ else {
     <body>
 
 <?php
+$context_action = '<a href="new_status.php">New status</a>';
 include("header.php");
 ?>
 <div id="content">

@@ -31,9 +31,21 @@ article.task .details .status {
     margin-left: 0.25em;
     color: #09f;
 }
+article.task .details .main-details .deadline {
+    margin-left: 0.5em;
+}
+.future {
+    color: green;
+}
+.past {
+    color: red;
+}
 article.task .details .user {
     margin: 0;
     color: #09f;
+}
+.user.reporter {
+    margin-top: 1em !important;
 }
 article.task .details .main-details h4 {
     color: #333;

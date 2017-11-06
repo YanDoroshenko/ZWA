@@ -15,10 +15,9 @@ $query->execute();
 $userRow = $query->get_result()->fetch_assoc();
 
 // select tasks the user is related to
-$query = $db->prepare("SELECT t.id 'id', t.name 'name', t.priority 'priority', t.description 'description', s.title 'status', s.final 'final', r.login 'reporter_l', r.name 'reporter_n', a.login 'assignee_l', a.name 'assignee_n', s.icon_path FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id WHERE NOT final = 1 AND (r.id = ? OR a.id = ?) ORDER BY (11 - priority) * (deadline - ?) LIMIT 5");
+$query = $db->prepare("SELECT t.id 'id', t.name 'name', t.priority 'priority', t.description 'description', t.deadline 'deadline', s.title 'status', s.final 'final', r.login 'reporter_l', r.name 'reporter_n', a.login 'assignee_l', a.name 'assignee_n', s.icon_path FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id WHERE NOT final = 1 AND (r.id = ? OR a.id = ?) ORDER BY CASE WHEN deadline IS  NULL THEN ~0 / 11 * priority ELSE (11 - priority) * DATEDIFF(deadline, CURDATE()) END LIMIT 5");
 date_default_timezone_set('Europe/Prague');
-$date = date('Y-m-d H:i:s', time());
-$query->bind_param("sss", $userRow["id"], $userRow["id"], $date);
+$query->bind_param("ss", $userRow["id"], $userRow["id"]);
 if (!$query || !$query->execute()) {
     echo $query->error;
     echo $db->error;
@@ -55,8 +54,16 @@ if (isset($tasks))
         $task_str .= "<div class=\"main-details\">";
         $task_str .= "<h3 class=\"name\">" . $task['name'] . ":</h3>";
         $task_str .= "<span class=\"status\">" . $task['status'] . "</span>";
+        if (!empty($task['deadline'])) {
+            $task_str .= "<span class=\"deadline ";
+            if (strtotime($task['deadline']) < time())
+                $task_str .= "past";
+            else 
+                $task_str .= "future";
+            $task_str .= "\">Deadline: " . date("d.m.Y", strtotime($task['deadline'])) . "</span>"; 
+        }
         $task_str .= "<br/>";
-        $task_str .= "<p class=\"user\">Reporter: <h4>" . $task['reporter_n'] . "</h4> (".  $task['reporter_l']. ")</p>";
+        $task_str .= "<span class=\"user reporter\">Reporter: <h4>" . $task['reporter_n'] . "</h4> (".  $task['reporter_l']. ")</span>";
         $task_str .= "<br/>";
         if (!empty($task['assignee_l']))
             $task_str .= "<span class=\"user\"><span>Assignee: </span><h4>" . $task['assignee_n'] . "</h4> (".  $task['assignee_l']. ")</span>";

@@ -1,3 +1,6 @@
+ * {
+    box-sizing: border-box;
+}
 label[for] {
     display: none;
 }

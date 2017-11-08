@@ -14,7 +14,7 @@ header ul li {
     display: inline;
     padding: 0.5em;
     margin: auto;
-    width: 6em;
+    width: 7em;
 }
 header ul li.menu:hover {
     background-color: #05f;

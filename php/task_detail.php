@@ -43,9 +43,13 @@ if (isset($task) && isset($_POST['btn-save'])) {
         if (strtotime($_POST['deadline']) != strtotime($task['deadline'])) {
             if (!empty($task_values))
                 $sql_task .= ", ";
-            $sql_task .= "deadline = ?";
-            $task_types .= "s";
-            $task_values[] = date("Y-m-d", strtotime($_POST['deadline']));
+            if (empty($_POST['deadline']))
+                $sql_task .= "deadline = NULL, ";
+            else {
+                $sql_task .= "deadline = ?";
+                $task_types .= "s";
+                $task_values[] = date("Y-m-d", strtotime($_POST['deadline']));
+            }
         }
         if ($_POST['status'] != $task['status_id']) {
             if (!empty($task_values))
@@ -59,7 +63,7 @@ if (isset($task) && isset($_POST['btn-save'])) {
             if (!empty($task_values))
                 $sql_task .= ", ";
             if ($_POST['assignee'] === '')
-                $sql_task .= "assignee = NULL";
+                $sql_task .= "assignee = NULL, ";
             else {
                 $sql_task .= "assignee = ?";
                 $task_types .= "i";
@@ -72,6 +76,8 @@ if (isset($task) && isset($_POST['btn-save'])) {
         }
         $task_types .= "i";
         $task_values[] = $id;
+        $sql_task = rtrim($sql_task, " ");
+        $sql_task = rtrim($sql_task, ",");
         $sql_task .= " WHERE id = ?";
         $sql_action .= ") VALUES (?, ?";
         $action_types = "ii";
@@ -99,8 +105,13 @@ if (isset($task) && isset($_POST['btn-save'])) {
             $action_types .= "s";
             $comment = $_POST['comment'] . "<br/>";
             if (strtotime($_POST['deadline']) != strtotime($task['deadline']))
-                $comment .= "Deadline changed from " . date("Y-m-d", strtotime($task['deadline'])) . " to " . $_POST['deadline'] . ".<br/>";
-            if ($task['assignee'] != $_POST['assignee'] && $_POST['assignee'] === '')
+                if (empty($_POST['deadline']))
+                    $comment .= "Deadline removed.<br/>";
+                else if (empty($task['deadline']))
+                    $comment .= "Deadline set to ". $_POST['deadline'] . ".<br/>";
+                else 
+                    $comment .= "Deadline changed from " . date("Y-m-d", strtotime($task['deadline'])) . " to " . $_POST['deadline'] . ".<br/>";
+            if ($task['assignee_id'] != $_POST['assignee'] && $_POST['assignee'] === '')
                 $comment .= "Task unassigned.";
             $action_values[] = $comment;
         }
@@ -109,8 +120,13 @@ if (isset($task) && isset($_POST['btn-save'])) {
             $action_types .= "s";
             $comment = "";
             if (strtotime($_POST['deadline']) != strtotime($task['deadline']))
-                $comment .= "Deadline changed from " . date("Y-m-d", strtotime($task['deadline'])) . " to " . $_POST['deadline'] . ".<br/>";
-            if ($task['assignee'] != $_POST['assignee'] && $_POST['assignee'] === '')
+                if (empty($_POST['deadline']))
+                    $comment .= "Deadline removed.<br/>";
+                else if (empty($task['deadline']))
+                    $comment .= "Deadline set to ". $_POST['deadline'] . ".<br/>";
+                else 
+                    $comment .= "Deadline changed from " . date("Y-m-d", strtotime($task['deadline'])) . " to " . $_POST['deadline'] . ".<br/>";
+            if ($task['assignee_id'] != $_POST['assignee'] && $_POST['assignee'] === '')
                 $comment .= "Task unassigned.";
             $action_values[] = $comment;
         }
@@ -210,11 +226,11 @@ if (isset($task)) {
         echo $task['status'] . " ";
     if ($_SESSION['user'] == $task['reporter_id']) {
         echo '<label for="deadline">Deadline</label>';
+        $input_str ='<input name="deadline" type="date" id="deadline" ';
         if (!empty($task['deadline']))
-            $d = strtotime($task['deadline']);
-        else
-            $d = time();
-        echo '<input name="deadline" type="date" id="deadline" required="required" value="' . date("Y-m-d", $d) . '"/>';
+            $input_str .= 'value="' . date("Y-m-d", strtotime($task['deadline'])) . '"';
+        $input_str .= "/>";
+        echo $input_str;
     }
     if ($_SESSION['user'] == $task['reporter_id']) {
         echo '<select id="assignee" name="assignee" title="Assignee">';

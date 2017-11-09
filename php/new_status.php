@@ -109,15 +109,15 @@ if (isset($_POST['btn-save'])) {
         <title>TITS - New status</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="../css/header.css">
-        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/header.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
     </head>
     <body>
 
     <?php include("header.php"); ?>
 
-    <form method="post" 
-        action="<?php echo $_SERVER['PHP_SELF']; ?>" 
+    <form method="post"
+        action="<?php echo $_SERVER['PHP_SELF']; ?>"
         id="new_status"
         enctype="multipart/form-data">
         <label for="title">Title</label>

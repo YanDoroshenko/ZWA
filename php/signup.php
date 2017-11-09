@@ -72,8 +72,8 @@ if (isset($_POST['btn-signup'])) {
         <title>TITS - Signup</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="../css/style.css">
-        <link rel="stylesheet" type="text/css" href="../css/signup.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/signup.css"/>
     </head>
     <body>
 <header>
@@ -84,7 +84,7 @@ if (isset($_POST['btn-signup'])) {
         <a href="login.php">&#x26BF; Log in</a>
 </header>
 <div id="content">
-    <form method="post" 
+    <form method="post"
           action="<?php echo $_SERVER['PHP_SELF']; ?>"
           id="signup">
 
@@ -98,12 +98,12 @@ if (isset($name))
 
 <label for="name">Login</label>
 <br/>
-        <input  type="text" 
-                name="login" 
+        <input  type="text"
+                name="login"
                 id="login"
                 required="required"
                 pattern="^[a-zA-Z]+[a-zA-Z0-9]*$"
-                placeholder="Login" 
+                placeholder="Login"
                 value="<?php
     if (isset($login))
         echo $login ?>"/>
@@ -112,9 +112,9 @@ if (isset($name))
 
 <label for="password2">Password</label>
 <br/>
-        <input type="password" 
-               name="password1"  
-               id="password1"  
+        <input type="password"
+               name="password1"
+               id="password1"
                required="required"
                placeholder=" Password"/>
         <label class="feedback" id="password1-feedback"></label>
@@ -122,8 +122,8 @@ if (isset($name))
 
 <label for="password2">Password confirmation</label>
 <br/>
-        <input type="password" 
-               name="password2"  
+        <input type="password"
+               name="password2"
                id="password2"
                required="required"
                placeholder="Password confirmation"/>

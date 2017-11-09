@@ -109,7 +109,7 @@ if (isset($task) && isset($_POST['btn-save'])) {
                     $comment .= "Deadline removed.<br/>";
                 else if (empty($task['deadline']))
                     $comment .= "Deadline set to ". $_POST['deadline'] . ".<br/>";
-                else 
+                else
                     $comment .= "Deadline changed from " . date("Y-m-d", strtotime($task['deadline'])) . " to " . $_POST['deadline'] . ".<br/>";
             if ($task['assignee_id'] != $_POST['assignee'] && $_POST['assignee'] === '')
                 $comment .= "Task unassigned.";
@@ -124,7 +124,7 @@ if (isset($task) && isset($_POST['btn-save'])) {
                     $comment .= "Deadline removed.<br/>";
                 else if (empty($task['deadline']))
                     $comment .= "Deadline set to ". $_POST['deadline'] . ".<br/>";
-                else 
+                else
                     $comment .= "Deadline changed from " . date("Y-m-d", strtotime($task['deadline'])) . " to " . $_POST['deadline'] . ".<br/>";
             if ($task['assignee_id'] != $_POST['assignee'] && $_POST['assignee'] === '')
                 $comment .= "Task unassigned.";
@@ -184,8 +184,8 @@ if (isset($task) && isset($_POST['btn-save'])) {
         <title>TITS - Task <?php echo $id ?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="../css/header.css">
-        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/header.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
     </head>
     <body>
 

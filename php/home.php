@@ -32,10 +32,10 @@ else {
         <title>TITS - Home</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="../css/header.css">
-        <link rel="stylesheet" type="text/css" href="../css/style.css">
-        <link rel="stylesheet" type="text/css" href="../css/home.css">
-        <link rel="stylesheet" type="text/css" href="../css/tasks.css">
+        <link rel="stylesheet" type="text/css" href="../css/header.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/home.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/tasks.css"/>
     </head>
     <body>
     <?php include("header.php"); ?>
@@ -58,9 +58,9 @@ if (isset($tasks))
             $task_str .= "<span class=\"deadline ";
             if (strtotime($task['deadline']) < time())
                 $task_str .= "past";
-            else 
+            else
                 $task_str .= "future";
-            $task_str .= "\">Deadline: " . date("d.m.Y", strtotime($task['deadline'])) . "</span>"; 
+            $task_str .= "\">Deadline: " . date("d.m.Y", strtotime($task['deadline'])) . "</span>";
         }
         $task_str .= "<br/>";
         $task_str .= "<span class=\"user reporter\">Reporter: <h4>" . $task['reporter_n'] . "</h4> (".  $task['reporter_l']. ")</span>";

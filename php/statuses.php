@@ -41,7 +41,7 @@ else {
     $offset = 0;
 }
 
-// Page counters 
+// Page counters
 $from = min($count, $offset + 1);
 $to = min($count, $offset + $page_size);
 
@@ -63,33 +63,29 @@ else {
         <title>TITS - Statuses</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="../css/header.css">
-        <link rel="stylesheet" type="text/css" href="../css/style.css">
-        <link rel="stylesheet" type="text/css" href="../css/statuses.css">
-        <link rel="stylesheet" type="text/css" href="../css/footer.css">
+        <link rel="stylesheet" type="text/css" href="../css/header.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/statuses.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
     </head>
     <body>
 
 <?php
 $context_action = '<a href="new_status.php">New status</a>';
 include("header.php");
-?>
-<div id="content">
-    <a href="new_status.php">New status</a>
-<br/>
-<?php
-    // Show all the statuses got from DB
-    if (isset($statuses))
-        while ($status = $statuses->fetch_assoc()) {
-            if (isset($status['icon_path']))
-                echo "<img src=\"" . $status['icon_path'] . "\" alt=\"" . $status['title'] . "\" width=25pt/>";
-            echo $status['title'] . " ";
-            echo $status['description'] . " ";
-            echo $status['final'] . " ";
-            if (!$status['system'])
-                echo "<a href=delete_status.php?id=" . $status['id'] . ">X</a>";
-            echo "<br/>";
-        }
+echo '<div id="content">';
+// Show all the statuses got from DB
+if (isset($statuses))
+    while ($status = $statuses->fetch_assoc()) {
+        if (isset($status['icon_path']))
+            echo "<img src=\"" . $status['icon_path'] . "\" alt=\"" . $status['title'] . "\" width=25pt/>";
+        echo $status['title'] . " ";
+        echo $status['description'] . " ";
+        echo $status['final'] . " ";
+        if (!$status['system'])
+            echo "<a href=delete_status.php?id=" . $status['id'] . ">X</a>";
+        echo "<br/>";
+    }
 ?>
 </div>
 <footer>

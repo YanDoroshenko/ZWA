@@ -76,16 +76,20 @@ if (isset($_POST['btn-save'])) {
 
     <?php include("header.php"); ?>
 
+<div id="content">
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"
 id="new_task">
 <label for="priority">Priority</label>
-        <input 
-type="number" name="priority" 
+        <input
+type="number" name="priority"
 id="priority"
 required="required"
 min="1" max="10" title="Priority" value="5">
     <label class="feedback" id="priority-feedback"></label>
 <br/>
+<label for="deadline">Deadline</label>
+<label class="feedback" id="deadline-feedback"></label>
+<input type="date" name="deadline" id="deadline"/>
 <label for="assignee">Assignee</label>
         <select name="assignee" title="Assignee">
 <?php
@@ -125,6 +129,7 @@ else {
 <br/>
         <button type="submit" name="btn-save">Save task</button>
     </form>
+</div>
     </body>
     <script src="../js/new_task.js"></script>
     </html>

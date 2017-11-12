@@ -1,0 +1,31 @@
+article {
+    display: block;
+    padding: 0.5em;
+    margin: 0.5em 0 0.5em 0;
+    background-color: #eff;
+}
+article .details, article img {
+    margin: 0.5em;
+    display: inline-block;
+}
+article .details * {
+   margin: 0; 
+   display: inline-block;
+}
+article .details h3 {
+    color: #333;
+}
+article .details h4 {
+    color: #09f;
+}
+article .details .final {
+    margin-left: 1em;
+    color: red;
+}
+a.delete {
+    float: right;
+    color: white;
+    background-color: #09f;
+    padding: 0.5em;
+    margin: 0.7em;
+}

@@ -18,7 +18,7 @@ if (isset($_POST['btn-filter']))
 else
     $filter = '%';
 
-$page_size = 5;
+$page_size = 10;
 
 $count_query = $db->prepare("SELECT count(*) FROM t_status WHERE title LIKE ? OR description LIKE ?");
 $count_query->bind_param("ss", $filter, $filter);
@@ -77,14 +77,24 @@ echo '<div id="content">';
 // Show all the statuses got from DB
 if (isset($statuses))
     while ($status = $statuses->fetch_assoc()) {
+        echo "<article>";
         if (isset($status['icon_path']))
             echo "<img src=\"" . $status['icon_path'] . "\" alt=\"" . $status['title'] . "\" width=25pt/>";
-        echo $status['title'] . " ";
-        echo $status['description'] . " ";
-        echo $status['final'] . " ";
-        if (!$status['system'])
-            echo "<a href=delete_status.php?id=" . $status['id'] . ">X</a>";
+        echo "<div class=\"details\"/>";
+        echo "<h3>" . $status['title'] . "</h3>";
+        if ($status['final'])
+            echo "<h4 class=\"final\">Final</h4>";
         echo "<br/>";
+        echo "<h4>";
+        if ($status['description'])
+            echo $status['description'];
+        else 
+            echo "No description";
+        echo "</h4>";
+        echo "</div>";
+        if (!$status['system'])
+            echo "<a class=\"delete\" href=delete_status.php?id=" . $status['id'] . ">Delete</a>";
+        echo "</article>";
     }
 ?>
 </div>

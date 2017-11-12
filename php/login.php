@@ -21,12 +21,12 @@ if (isset($_POST['btn-login'])) {
     // Validation
     if (empty($login)) {
         $error = true;
-        echo "Please enter your login.";
+        echo '<label id="overall" class="incorrect feedback">Entered credentials are invalid, try again</label>';
     }
 
     if (empty($password)) {
         $error = true;
-        echo "Please enter your password.";
+        echo '<label id="overall" class="incorrect feedback">Entered credentials are invalid, try again</label>';
     }
 
     // if there's no error, continue to login
@@ -48,7 +48,7 @@ if (isset($_POST['btn-login'])) {
             header("Location: home.php");
         }
         else {
-            echo "Incorrect Credentials, Try again...";
+            echo '<label id="overall" class="incorrect feedback">Entered credentials are invalid, try again</label>';
         }
 
     }
@@ -78,7 +78,7 @@ if (isset($_POST['btn-login'])) {
 <br/>
         <input type="text" name="login" id="login" placeholder="Enter your login" required="required"
             autofocus="autofocus"
-        value="<?php
+            value="<?php
 if (isset($login))
     echo $login; ?>"
         />

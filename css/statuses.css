@@ -9,7 +9,7 @@ article .details, article img {
     display: inline-block;
 }
 article .details * {
-   margin: 0; 
+   margin: 0;
    display: inline-block;
 }
 article .details h3 {
@@ -22,10 +22,19 @@ article .details .final {
     margin-left: 1em;
     color: red;
 }
-a.delete {
+article form {
     float: right;
+}
+button.delete {
     color: white;
     background-color: #09f;
     padding: 0.5em;
-    margin: 0.7em;
+    border: none;
+    margin: 1em;
+}
+.hidden {
+    display: none;
+}
+label.incorrect {
+    vertical-align: 0;
 }

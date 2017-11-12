@@ -12,13 +12,49 @@ if (!isset($_SESSION['user'])) {
 // For filter to know where to go after filtering
 $self = $_SERVER['PHP_SELF'];
 
+// If delete clicked
+if (isset($_POST['delete'])) {
+    $id_to_delete = $_POST['id'];
+
+    // Find dependent tasks
+    $check = $db->prepare("SELECT id FROM t_task WHERE status = ?");
+    $check->bind_param("i", $id_to_delete);
+    if (!$check->execute())
+        $feedback[$id_to_delete] = '<label id="overall" class="incorrect feedback">Something went wrong with the database: ' . $db->error . '</label>';
+    else if (mysqli_num_rows($check->get_result()))
+        $feedback[$id_to_delete] = '<label id="overall" class="incorrect feedback">Can\'t delete status, dependent tasks found.</label>';
+    else {
+
+        //Check if is system
+        $check = $db->prepare("SELECT id FROM t_status WHERE id = ? AND system = TRUE");
+        $check->bind_param("i", $id_to_delete);
+        if (!$check->execute())
+            $feedback[$id_to_delete] = '<label id="overall" class="incorrect feedback">Something went wrong with the database: ' . $db->error . '</label>';
+        else if (mysqli_num_rows($check->get_result()))
+            $feedback[$id_to_delete] = '<label id="overall" class="incorrect feedback">Can\'t delete system status.</label>';
+        else {
+            // Delete the status
+            $query = $db->prepare("DELETE FROM t_status WHERE id = ?");
+            $query->bind_param("i", $id_to_delete);
+            if (!$query->execute())
+                $feedback[$id_to_delete] = '<label id="overall" class="incorrect feedback">Something went wrong with the database: ' . $db->error . '</label>';
+            else  {
+                if (isset($_GET['page']))
+                    header("Location: " . $self . "?page=" . $_GET['page']);
+                else
+                    header("Location: " . $self);
+            }
+        }
+    }
+}
+
 // Initialize filter and pagination
 if (isset($_POST['btn-filter']))
     $filter = '%' . $_POST['filter'] . '%';
 else
     $filter = '%';
 
-$page_size = 10;
+$page_size = 9;
 
 $count_query = $db->prepare("SELECT count(*) FROM t_status WHERE title LIKE ? OR description LIKE ?");
 $count_query->bind_param("ss", $filter, $filter);
@@ -88,12 +124,18 @@ if (isset($statuses))
         echo "<h4>";
         if ($status['description'])
             echo $status['description'];
-        else 
+        else
             echo "No description";
         echo "</h4>";
         echo "</div>";
-        if (!$status['system'])
-            echo "<a class=\"delete\" href=delete_status.php?id=" . $status['id'] . ">Delete</a>";
+        if (!$status['system']) {
+            echo "<form method=\"post\" action=\"" . $self . "?page=" . $page . "\">";
+            if (isset($feedback[$status['id']]))
+                echo $feedback[$status['id']];
+            echo "<input class=\"hidden\" name=\"id\" value=\"" . $status['id'] . "\"/>";
+            echo "<button class=\"delete\" type=\"submit\" name=\"delete\">Delete</button>";
+            echo "</form>";
+        }
         echo "</article>";
     }
 ?>

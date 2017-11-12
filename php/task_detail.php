@@ -12,7 +12,7 @@ if (!isset($_SESSION['user'])) {
 $id = $_GET['id'];
 
 // Find taks in DB
-$task_query = $db->prepare("SELECT t.id 'id', t.name 'name', t.priority 'priority', t.deadline 'deadline', t.description 'description', s.id 'status_id', s.title 'status', s.icon_path 'icon', r.id 'reporter_id',  r.login 'reporter', a.id 'assignee_id', a.login 'assignee' FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id WHERE t.id = ?");
+$task_query = $db->prepare("SELECT t.id 'id', t.name 'name', t.priority 'priority', t.deadline 'deadline', t.description 'description', s.id 'status_id', s.title 'status', s.icon_path 'icon', s.final 'final', r.id 'reporter_id',  r.login 'reporter', a.id 'assignee_id', a.login 'assignee' FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id WHERE t.id = ?");
 $task_query->bind_param("i", $id);
 if (!$task_query || !$task_query->execute()) {
     echo $task_query->error;
@@ -206,7 +206,7 @@ if (isset($task)) {
     else
         echo $task['priority'] . " ";
     echo '<img class="task-status-icon" src="' . $task['icon'] . '" alt=""/><br/>';
-    if ($_SESSION['user'] == $task['reporter_id']) {
+    if ($_SESSION['user'] == $task['reporter_id'] && $task['final'] != 1) {
         echo '<select id="status-selection" name="status" title="Status">';
         $action_query = $db->prepare("SELECT id, title, icon_path FROM t_status");
         if ($action_query->execute()) {

@@ -20,7 +20,7 @@ if (isset($_POST['btn-save'])) {
     // Validation
     if (empty($title)) {
         $error = true;
-        echo "Please enter status title.";
+        echo '<label id="overall" class="incorrect feedback">Please enter title</label>';
     }
 
     if (isset($_POST['final']) && $_POST['final'] == 'y')
@@ -43,8 +43,8 @@ if (isset($_POST['btn-save'])) {
                 $error = true;
         }
         else {
-            echo "File was not uploaded. The maximum allowed size might have been exceeded.";
             $error = true;
+            echo '<label id="overall" class="incorrect feedback">File was not uploaded. The maximum allowed size might have been exceeded</label>';
         }
     }
     // If OK save status to DB
@@ -94,11 +94,8 @@ if (isset($_POST['btn-save'])) {
         if ($query->execute()) {
             header("Location: statuses.php");
         }
-        else {
-            echo "Something went wrong:<br/>";
-            echo $db->error . "<br/>";
-            echo $query->error . "<br/>";
-        }
+        else
+            echo '<label id="overall" class="incorrect feedback">Error: ' . $db->error .'</label>';
     }
 }
 ?>
@@ -110,7 +107,7 @@ if (isset($_POST['btn-save'])) {
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="../css/header.css"/>
         <link rel="stylesheet" type="text/css" href="../css/style.css"/>
-        <link rel="stylesheet" type="text/css" href="../css/new_task.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/new_status.css"/>
     </head>
     <body>
 

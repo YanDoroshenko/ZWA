@@ -23,12 +23,12 @@ if (isset($_POST['btn-save'])) {
     // Validation
     if (empty($name)) {
         $error = true;
-        echo "Please enter task name.";
+        echo '<label id="overall" class="incorrect feedback">Please enter task name</label>';
     }
 
     if (empty($priority)) {
         $error = true;
-        echo "Please select priority.";
+        echo '<label id="overall" class="incorrect feedback">Please specify priority</label>';
     }
 
     // If OK, save task to DB
@@ -55,11 +55,8 @@ if (isset($_POST['btn-save'])) {
         // If OK proceed to tasks list
         if ($query->execute())
             header("Location: tasks.php");
-        else {
-            echo "Something went wrong:<br/>";
-            echo $db->error . "<br/>";
-            echo $query->error . "<br/>";
-        }
+        else
+            echo '<label id="overall" class="incorrect feedback">Error: ' . $db->error . '</label>';
     }
 }
 ?>
@@ -107,11 +104,8 @@ if ($query->execute()) {
         echo "<option value=\"" . $assignee['id'] . "\"\">" . $displayName . "</option>";
     }
 }
-else {
-    echo "Something went wrong:<br/>";
-    echo $db->error . "<br/>";
-    echo $query->error . "<br/>";
-}
+else
+    echo '<label id="overall" class="incorrect feedback">Error: ' . $db->error . '</label>';
 ?>
         </select>
 <br/>

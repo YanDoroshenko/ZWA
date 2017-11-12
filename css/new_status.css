@@ -37,7 +37,7 @@ label.feedback {
 }
 label#overall {
     position: absolute;
-    bottom: 7em;
+    bottom: 9em;
     margin-left: 34em;
     font-size: 125%;
 }

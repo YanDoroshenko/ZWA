@@ -12,7 +12,6 @@
     display: inline;
     color: #09f;
     font-size: 200%;
-    font-family: sans-serif;
 }
 #content form input, #content form textarea {
     background-color: white;
@@ -41,5 +40,4 @@ label#overall {
     bottom: 7em;
     margin-left: 34em;
     font-size: 125%;
-    font-family: sans-serif;
 }

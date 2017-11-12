@@ -1,5 +1,7 @@
  * {
     box-sizing: border-box;
+    font-family: sans-serif;
+    text-decoration: none;
 }
 label[for] {
     display: none;

@@ -71,7 +71,7 @@ if (isset($task) && isset($_POST['btn-save'])) {
             }
             $sql_action .= ", assignee";
         }
-        if ($_POST['comment'] || strtotime($_POST['deadline']) != strtotime($task['deadline']) || $_POST['assignee'] === '') {
+        if ($_POST['comment'] || strtotime($_POST['deadline']) != strtotime($task['deadline']) || $_POST['assignee'] === '' && $task['assignee_id']) {
             $sql_action .= ", description";
         }
         $task_types .= "i";

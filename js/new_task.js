@@ -24,8 +24,6 @@ name.addEventListener("blur", (e) => {
 const priority = document.getElementById("priority");
 const priorityFeedback = document.getElementById("priority-feedback");
 priority.removeAttribute("required");
-priority.removeAttribute("min");
-priority.removeAttribute("max");
 
 priority.addEventListener("blur", (e) => {
     if (priority.value) {

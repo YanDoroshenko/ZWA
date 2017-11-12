@@ -13,10 +13,12 @@ input.incorrect {
 label.correct {
     display: inline;
     color: green;
+    vertical-align: 0.3em;
 }
 label.incorrect {
     display: inline;
     color: red;
+    vertical-align: 0.3em;
 }
 #content {
     position: absolute;

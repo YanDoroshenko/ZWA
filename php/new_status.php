@@ -1,7 +1,6 @@
 <?php
 ob_start();
-session_start();
-require_once 'db.php';
+session_start(); require_once 'db.php';
 
 // Redirect unauthorized user to login
 if (!isset($_SESSION['user'])) {
@@ -111,16 +110,18 @@ if (isset($_POST['btn-save'])) {
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="../css/header.css"/>
         <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/new_task.css"/>
     </head>
     <body>
 
     <?php include("header.php"); ?>
-
+<div id="content">
     <form method="post"
         action="<?php echo $_SERVER['PHP_SELF']; ?>"
         id="new_status"
         enctype="multipart/form-data">
         <label for="title">Title</label>
+<br/>
         <input
                 required="required"
                 type="text"
@@ -131,24 +132,26 @@ if (isset($_POST['btn-save'])) {
 <label id="title-feedback"></label>
 <br/>
 <label for="title">Description</label>
-        <input
-                type="text"
+<br/>
+        <textarea rows="5" columns="23"
                 name="description"
                 placeholder="Status description"
-                title="Description"/>
+                title="Description"></textarea>
 <br/>
 <label for="title">Final</label>
-        <input
-                type="checkbox"
-                name="final"
-                title="Task can't be modified after this status is assigned"
-                value="y">
+        <input type="checkbox"
+               name="final"
+               title="Task can't be modified after this status is assigned"
+               value="y">
 <br/>
-<label for="title">Icon</label>
-        <input type="file" name="iconUpload">
+<label for="iconUpload">Icon</label>
 <br/>
-        <button type="submit" name="btn-save">Save status</button>
+        <input id="iconUpload" type="file" name="iconUpload">
+        <label id="iconUpload-feedback"></label>
+<br/>
+        <button type="submit" name="btn-save">Create</button>
     </form>
+</div>
     </body>
     <script src="../js/new_status.js"></script>
     </html>

@@ -1,0 +1,45 @@
+#content {
+    position: absolute;
+    top: 4em;
+    left: 0;
+    right: 0;
+}
+#content form {
+    margin-left: 42em;
+}
+#content form input, #content form label[for], #content form button, #content form textarea {
+    margin: 0.5em;
+    display: inline;
+    color: #09f;
+    font-size: 200%;
+    font-family: sans-serif;
+}
+#content form input, #content form textarea {
+    background-color: white;
+    border: 2px solid #adf;
+    padding: 0.5em;
+    width: 14em;
+    text-align: center;
+    color: #09f;
+}
+#content form input::placeholder, #content form textarea::placeholder {
+    color: #cef;
+}
+#content form button {
+    border: 0;
+    color: white;
+    background-color: #09f;
+    padding: 0.5em;
+    width: 14em;
+}
+label.feedback {
+    display: inline;
+    vertical-align: 0.3em;
+}
+label#overall {
+    position: absolute;
+    bottom: 7em;
+    margin-left: 34em;
+    font-size: 125%;
+    font-family: sans-serif;
+}

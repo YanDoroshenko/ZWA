@@ -71,6 +71,7 @@ if (isset($_POST['btn-save'])) {
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="../css/header.css"/>
         <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/new_task.css"/>
     </head>
     <body>
 
@@ -80,6 +81,7 @@ if (isset($_POST['btn-save'])) {
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"
 id="new_task">
 <label for="priority">Priority</label>
+<br/>
         <input
 type="number" name="priority"
 id="priority"
@@ -88,9 +90,11 @@ min="1" max="10" title="Priority" value="5">
     <label class="feedback" id="priority-feedback"></label>
 <br/>
 <label for="deadline">Deadline</label>
-<label class="feedback" id="deadline-feedback"></label>
+<br/>
 <input type="date" name="deadline" id="deadline"/>
+<br/>
 <label for="assignee">Assignee</label>
+<br/>
         <select name="assignee" title="Assignee">
 <?php
 // List users
@@ -112,6 +116,7 @@ else {
         </select>
 <br/>
 <label for="name">Name</label>
+<br/>
         <input
                 type="text"
                 name="name"
@@ -122,12 +127,13 @@ else {
 <label id="name-feedback"></label>
 <br/>
 <label for="description">Description</label>
-        <input
-                type="text"
-                name="description"
-                placeholder="Task description"/>
 <br/>
-        <button type="submit" name="btn-save">Save task</button>
+        <textarea rows="3" cols="23"
+name="description"
+                placeholder="Task description">
+</textarea>
+<br/>
+        <button type="submit" name="btn-save">Create</button>
     </form>
 </div>
     </body>

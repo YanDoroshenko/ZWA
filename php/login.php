@@ -66,11 +66,11 @@ if (isset($_POST['btn-login'])) {
     </head>
     <body>
 <header>
-<img id="logo" src="../img/favicon.png"/>
+<img id="logo" src="../img/favicon.png" alt="logo"/>
          <span>
             Temporal Issue Tracking System
         </span>
-        <a href="signup.php">&#x26BF Sign Up</a>
+        <a href="signup.php">&#x26BF; Sign Up</a>
 </header>
 <div id="content">
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -92,7 +92,7 @@ if (isset($login))
         <button type="submit" name="btn-login">Log in</button>
     </form>
 </div>
-    </body>
 <script src="../js/login.js"></script>
+    </body>
     </html>
 <?php ob_end_flush(); ?>

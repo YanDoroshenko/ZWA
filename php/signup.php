@@ -77,7 +77,7 @@ if (isset($_POST['btn-signup'])) {
     </head>
     <body>
 <header>
-<img id="logo" src="../img/favicon.png"/>
+<img id="logo" src="../img/favicon.png" alt="logo"/>
          <span>
             Temporal Issue Tracking System
         </span>
@@ -90,13 +90,13 @@ if (isset($_POST['btn-signup'])) {
 
 <label for="name">Name</label>
 <br/>
-        <input type="text" name="name" placeholder="Name"
+        <input type="text" name="name" id="name" placeholder="Name"
         value="<?php
 if (isset($name))
     echo $name ?>"/>
 <br/>
 
-<label for="name">Login</label>
+<label for="login">Login</label>
 <br/>
         <input  type="text"
                 name="login"
@@ -134,7 +134,7 @@ if (isset($name))
 
     </form>
 </div>
-    </body>
 <script src="../js/signup.js"></script>
+    </body>
     </html>
 <?php ob_end_flush(); ?>

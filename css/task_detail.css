@@ -1,0 +1,80 @@
+form#task-detail {
+    margin: 0.5em;
+}
+div.info {
+    display: inline-block;
+    width: 25%;
+    padding: 1em;
+}
+div.info * {
+    color: #09f;
+}
+div#second {
+    vertical-align: 6em;
+}
+div#third {
+    vertical-align: 5em;
+}
+.tall {
+    vertical-align: 0 !important;
+}
+.tall input[type=date] {
+    font-size: 100%;
+}
+div.info select, div.info input, div.info textarea, div.info button {
+    padding: 0.5em;
+    border: #09f 2px solid;
+    background-color: white;
+    font-size: 125%;
+}
+div#third input[type=date] {
+    margin-bottom: 1em;
+}
+div.info label[for] {
+    display: block;
+    font-weight: bold;
+}
+div#first img {
+    width: 4em;
+    margin: 0.7em;
+}
+#priority {
+    margin: 0.3em;
+}
+#status, #comment {
+    color: #333;
+}
+textarea::placeholder {
+    color: #aaa;
+}
+h4.user {
+    display: inline;
+    margin-top: 0.5em;
+}
+h2 {
+    color: #333 !important;
+    margin: 0;
+}
+h3 {
+    display: inline;
+    color: #333 !important;
+}
+span {
+    margin-left: 0.3em;
+}
+button {
+    width: 14em;
+}
+article.action {
+    background-color: #cef;
+    margin: 0.5em;
+    padding : 0.5em;
+}
+article.action h4, article.action h5 {
+    display: inline;
+    color: #09f;
+}
+.feedback {
+    position: absolute;
+    top: 3.5em;
+}

@@ -78,3 +78,6 @@ article.action h4, article.action h5 {
     position: absolute;
     top: 3.5em;
 }
+#user-name h3 {
+    color: white !important;
+}

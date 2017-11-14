@@ -14,7 +14,7 @@ header ul li {
     display: inline;
     padding: 0.5em;
     margin: auto;
-    width: 6em;
+    width: 7em;
 }
 header ul li.menu:hover {
     background-color: #05f;
@@ -25,10 +25,9 @@ header ul li h3 {
 header ul li img {
     height: 0.9em;
 }
-header ul li a, h3 {
+header ul li a, header ul li h3 {
     color: white;
     font-size: 150%;
-    font-family: sans-serif;
     text-decoration: none;
 }
 .left {
@@ -70,4 +69,11 @@ header ul li a, h3 {
 }
 #user-name {
     width: fit-content;
+}
+#avatar-header {
+    height: 0.7em;
+}
+#context {
+    width: fit-content;
+    border-left: 2px solid white;
 }

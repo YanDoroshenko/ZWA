@@ -1,0 +1,58 @@
+a {
+    color: #333;
+}
+article.task {
+    padding: 0.5em;
+    margin: 0.5em 0 0.5em 0;
+    background-color: #eff;
+}
+article.task .details, article.task .details *, article.task .description {
+    display: inline-block;
+}
+.main-details h3 {
+    margin: 0;
+}
+.main-details h4 {
+    margin: 0;
+}
+article.task .details img.status {
+    display: inline;
+    height: 2em;
+    vertical-align: 0.9em;
+}
+article.task .details .priority {
+    font-size: 125%;
+    vertical-align: 0.3em;
+    margin: 0 0.5em 0 0;
+}
+article.task .details .status {
+    margin-left: 0.25em;
+    color: #09f;
+}
+article.task .details .main-details .deadline {
+    margin-left: 0.5em;
+}
+.future {
+    color: green;
+}
+.past {
+    color: red;
+}
+article.task .details .user {
+    margin: 0;
+    color: #09f;
+}
+.user.reporter {
+    margin-top: 1em !important;
+}
+article.task .details .main-details h4 {
+    color: #333;
+    margin-left: 0.2em;
+}
+article.task .description {
+    float: right;
+    width: 60%;
+}
+article.task .description p {
+    margin: 0;
+}

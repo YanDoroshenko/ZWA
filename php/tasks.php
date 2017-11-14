@@ -18,7 +18,7 @@ if (isset($_POST['btn-filter']))
 else
     $filter = '%';
 
-$page_size = 5;
+$page_size = 10;
 
 // Count entries
 $count_query = $db->prepare("SELECT count(*) FROM t_task WHERE name LIKE ? OR description LIKE ?");
@@ -46,7 +46,7 @@ $from = min($count, $offset + 1);
 $to = min($count, $offset + $page_size);
 
 // Find all the entries according to the filter and pagination
-$query = $db->prepare("SELECT t.id 'id', t.name 'name', priority, s.title 'status', r.login 'reporter', a.login 'assignee' FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id WHERE t.name LIKE ? OR t.description LIKE ? LIMIT $offset, $page_size");
+$query = $db->prepare("SELECT t.id 'id', t.name 'name', t.priority 'priority', t.description 'description', t.deadline 'deadline', s.title 'status', r.login 'reporter_l', r.name 'reporter_n', a.login 'assignee_l', a.name 'assignee_n', s.icon_path FROM t_task t JOIN t_status s ON t.status = s.id JOIN t_user r ON t.reporter = r.id LEFT JOIN t_user a ON t.assignee = a.id WHERE t.name LIKE ? OR t.description LIKE ? LIMIT $offset, $page_size");
 $query->bind_param("ss", $filter, $filter);
 if (!$query || !$query->execute()) {
     echo $query->error;
@@ -63,31 +63,51 @@ else {
         <title>TITS - Tasks</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="../css/header.css">
-        <link rel="stylesheet" type="text/css" href="../css/style.css">
-        <link rel="stylesheet" type="text/css" href="../css/tasks.css">
-        <link rel="stylesheet" type="text/css" href="../css/footer.css">
+        <link rel="stylesheet" type="text/css" href="../css/header.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/tasks.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
     </head>
     <body>
 
 <?php
+$context_action = '<a href="new_task.php">New task</a>';
 include("header.php");
 ?>
 <div id="content">
-    <a href="new_task.php">New task</a>
-<br/>
 <?php
-    // Show all the tasks
-    if (isset($tasks))
-        while ($task = $tasks->fetch_assoc()) {
-            echo "<a href=task_detail.php?id=" . $task['id'] . ">" . $task['id'] . "</a> ";
-            echo $task['name'] . " ";
-            echo $task['priority'] . " ";
-            echo $task['status'] . " ";
-            echo $task['reporter'] . " ";
-            echo $task['assignee'] . " ";
-            echo "<br/>";
+// Show all the tasks
+if (isset($tasks))
+    while ($task = $tasks->fetch_assoc()) {
+        $task_str = "<a href=task_detail.php?id=" . $task['id'] . ">";
+        $task_str .= '<article class="task">';
+        $task_str .= "<div class=\"details\">";
+        $task_str .= "<img class=\"status\" src=\"" . $task['icon_path']. "\"/>";
+        $task_str .= "<h4 class=\"priority\">" . $task['priority'] . "</h4>";
+        $task_str .= "<div class=\"main-details\">";
+        $task_str .= "<h3 class=\"name\">" . $task['name'] . ":</h3>";
+        $task_str .= "<span class=\"status\">" . $task['status'] . "</span>";
+        if (!empty($task['deadline'])) {
+            $task_str .= "<span class=\"deadline ";
+            if (strtotime($task['deadline']) < time())
+                $task_str .= "past";
+            else
+                $task_str .= "future";
+            $task_str .= "\">Deadline: " . date("d.m.Y", strtotime($task['deadline'])) . "</span>";
         }
+        $task_str .= "<br/>";
+        $task_str .= "<span class=\"user reporter\">Reporter: <h4>" . $task['reporter_n'] . "</h4> (".  $task['reporter_l']. ")</span>";
+        $task_str .= "<br/>";
+        if (!empty($task['assignee_l']))
+            $task_str .= "<span class=\"user\"><span>Assignee: </span><h4>" . $task['assignee_n'] . "</h4> (".  $task['assignee_l']. ")</span>";
+        $task_str .= "</div>";
+        $task_str .= "</div>";
+        if (!empty($task['description']))
+            $task_str .= "<div class=\"description\"><p>" . $task['description'] . "</p></div>";
+        $task_str .= "</article>";
+        $task_str .= "</a>";
+        echo $task_str;
+    }
 ?>
 </div>
 <footer>

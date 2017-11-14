@@ -1,19 +1,26 @@
+ * {
+    box-sizing: border-box;
+    font-family: sans-serif;
+    text-decoration: none;
+}
 label[for] {
     display: none;
 }
 input.correct {
-    border: 2px solid green;
+    border: 2px solid green !important;
 }
 input.incorrect {
-    border: 2px solid red;
+    border: 2px solid red !important;
 }
 label.correct {
     display: inline;
     color: green;
+    vertical-align: 0.3em;
 }
 label.incorrect {
     display: inline;
     color: red;
+    vertical-align: 0.3em;
 }
 #content {
     position: absolute;

@@ -1,0 +1,22 @@
+article {
+    display: block;
+    height: 4em;
+    border-bottom: 1px solid #09f;
+}
+img.avatar {
+    float: left;
+    height: 2em;
+    margin: 1em;
+}
+div.user-details {
+    display: inline;
+    float: left;
+    padding: 0.6em;
+}
+h3 {
+    margin: 1px;
+}
+h4 {
+    margin: 1px;
+    color: #09f;
+}

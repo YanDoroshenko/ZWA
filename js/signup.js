@@ -68,7 +68,7 @@ password2.addEventListener("blur", (e) => {
 });
 
 // Entire form validation before submit
-const form = document.getElementById("signup");
+const form = document.querySelector("form");
 form.addEventListener("submit", (e) => {
     if (login.value.search(/^[a-zA-Z]+[a-zA-Z0-9]*/) == -1) {
         e.preventDefault();

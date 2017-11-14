@@ -41,7 +41,7 @@ if (isset($_POST['btn-signup'])) {
         $count = mysqli_num_rows($result);
         if ($count != 0) {
             $error = true;
-            echo "Provided login is already in use.";
+                echo '<label id="overall" class="incorrect feedback">Login ' . $login .' is already taken</label>';
         }
 
         $hashedPassword = password_hash($password1, PASSWORD_DEFAULT, ['salt' => 'kjihgfedcba' . $login . 'abcdefghijk']);
@@ -53,16 +53,14 @@ if (isset($_POST['btn-signup'])) {
             $query->bind_param("sss", $login, $hashedPassword, $name);
 
             if ($query->execute()) {
-                echo "Successfully registered, you may login now";
+                echo '<label id="overall" class="correct feedback">Successfully registered, you may login now</label>';
                 unset($name);
                 unset($login);
                 unset($password1);
                 unset($password2);
             }
             else {
-                echo $query->error . "<br/>";
-                echo $db->error . "<br/>";
-                echo "Something went wrong, try again later...";
+                echo '<label id="overall" class="incorrect feedback">Something went wrong with the database: ' . $db->error . '</label>';
             }
         }
     }
@@ -74,31 +72,38 @@ if (isset($_POST['btn-signup'])) {
         <title>TITS - Signup</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-<link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/signup.css"/>
     </head>
     <body>
-    <form method="post" 
+<header>
+<img id="logo" src="../img/favicon.png"/>
+         <span>
+            Temporal Issue Tracking System
+        </span>
+        <a href="login.php">&#x26BF; Log in</a>
+</header>
+<div id="content">
+    <form method="post"
           action="<?php echo $_SERVER['PHP_SELF']; ?>"
           id="signup">
-        <h2>Sign Up</h2>
-<br/>
-        <a href="login.php">Log in</a>
-<br/>
 
 <label for="name">Name</label>
+<br/>
         <input type="text" name="name" placeholder="Name"
         value="<?php
 if (isset($name))
     echo $name ?>"/>
 <br/>
 
-<label for="name">Name</label>
-        <input  type="text" 
-                name="login" 
+<label for="name">Login</label>
+<br/>
+        <input  type="text"
+                name="login"
                 id="login"
                 required="required"
                 pattern="^[a-zA-Z]+[a-zA-Z0-9]*$"
-                placeholder="Login" 
+                placeholder="Login"
                 value="<?php
     if (isset($login))
         echo $login ?>"/>
@@ -106,27 +111,29 @@ if (isset($name))
 <br/>
 
 <label for="password2">Password</label>
-        <input type="password" 
-               name="password1"  
-               id="password1"  
+<br/>
+        <input type="password"
+               name="password1"
+               id="password1"
                required="required"
                placeholder=" Password"/>
         <label class="feedback" id="password1-feedback"></label>
 <br/>
 
 <label for="password2">Password confirmation</label>
-        <input type="password" 
-               name="password2"  
+<br/>
+        <input type="password"
+               name="password2"
                id="password2"
                required="required"
                placeholder="Password confirmation"/>
         <label class="feedback" id="password2-feedback"></label>
-<br/>
 
-        <button type="submit" name="btn-signup">Sign Up</button>
 <br/>
+        <button type="submit" name="btn-signup">Sign Up</button>
 
     </form>
+</div>
     </body>
 <script src="../js/signup.js"></script>
     </html>

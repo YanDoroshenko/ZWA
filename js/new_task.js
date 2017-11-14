@@ -27,11 +27,20 @@ priority.removeAttribute("required");
 
 priority.addEventListener("blur", (e) => {
     if (priority.value) {
-        priority.classList.add("correct");
-        priority.classList.remove("incorrect");
-        priorityFeedback.classList.add("correct");
-        priorityFeedback.classList.remove("incorrect");
-        priorityFeedback.innerHTML = "\u2714";
+        if (!(parseInt(priority.value) > 0 && parseInt(priority.value) <= 10)) {
+            priority.classList.add("incorrect");
+            priority.classList.remove("correct");
+            priorityFeedback.classList.add("incorrect");
+            priorityFeedback.classList.remove("correct");
+            priorityFeedback.innerHTML = "\u2716 Valid values are 1 to 10";
+        }
+        else {
+            priority.classList.add("correct");
+            priority.classList.remove("incorrect");
+            priorityFeedback.classList.add("correct");
+            priorityFeedback.classList.remove("incorrect");
+            priorityFeedback.innerHTML = "\u2714";
+        }
     }
     else {
         priority.classList.add("incorrect");

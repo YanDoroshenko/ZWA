@@ -23,12 +23,12 @@ if (isset($_POST['btn-save'])) {
     // Validation
     if (empty($name)) {
         $error = true;
-        echo "Please enter task name.";
+        echo '<label id="overall" class="incorrect feedback">Please enter task name</label>';
     }
 
     if (empty($priority)) {
         $error = true;
-        echo "Please select priority.";
+        echo '<label id="overall" class="incorrect feedback">Please specify priority</label>';
     }
 
     // If OK, save task to DB
@@ -55,11 +55,8 @@ if (isset($_POST['btn-save'])) {
         // If OK proceed to tasks list
         if ($query->execute())
             header("Location: tasks.php");
-        else {
-            echo "Something went wrong:<br/>";
-            echo $db->error . "<br/>";
-            echo $query->error . "<br/>";
-        }
+        else
+            echo '<label id="overall" class="incorrect feedback">Error: ' . $db->error . '</label>';
     }
 }
 ?>
@@ -69,24 +66,32 @@ if (isset($_POST['btn-save'])) {
         <title>TITS - New task</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="../css/header.css">
-        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/header.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/new_task.css"/>
     </head>
     <body>
 
     <?php include("header.php"); ?>
 
+<div id="content">
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"
 id="new_task">
 <label for="priority">Priority</label>
-        <input 
-type="number" name="priority" 
+<br/>
+        <input
+type="number" name="priority"
 id="priority"
 required="required"
 min="1" max="10" title="Priority" value="5">
     <label class="feedback" id="priority-feedback"></label>
 <br/>
+<label for="deadline">Deadline</label>
+<br/>
+<input type="date" name="deadline" id="deadline"/>
+<br/>
 <label for="assignee">Assignee</label>
+<br/>
         <select name="assignee" title="Assignee">
 <?php
 // List users
@@ -99,15 +104,13 @@ if ($query->execute()) {
         echo "<option value=\"" . $assignee['id'] . "\"\">" . $displayName . "</option>";
     }
 }
-else {
-    echo "Something went wrong:<br/>";
-    echo $db->error . "<br/>";
-    echo $query->error . "<br/>";
-}
+else
+    echo '<label id="overall" class="incorrect feedback">Error: ' . $db->error . '</label>';
 ?>
         </select>
 <br/>
 <label for="name">Name</label>
+<br/>
         <input
                 type="text"
                 name="name"
@@ -118,13 +121,15 @@ else {
 <label id="name-feedback"></label>
 <br/>
 <label for="description">Description</label>
-        <input
-                type="text"
-                name="description"
-                placeholder="Task description"/>
 <br/>
-        <button type="submit" name="btn-save">Save task</button>
+        <textarea rows="3" cols="23"
+name="description"
+                placeholder="Task description">
+</textarea>
+<br/>
+        <button type="submit" name="btn-save">Create</button>
     </form>
+</div>
     </body>
     <script src="../js/new_task.js"></script>
     </html>

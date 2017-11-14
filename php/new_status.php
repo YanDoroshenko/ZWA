@@ -1,7 +1,6 @@
 <?php
 ob_start();
-session_start();
-require_once 'db.php';
+session_start(); require_once 'db.php';
 
 // Redirect unauthorized user to login
 if (!isset($_SESSION['user'])) {
@@ -21,7 +20,7 @@ if (isset($_POST['btn-save'])) {
     // Validation
     if (empty($title)) {
         $error = true;
-        echo "Please enter status title.";
+        echo '<label id="overall" class="incorrect feedback">Please enter title</label>';
     }
 
     if (isset($_POST['final']) && $_POST['final'] == 'y')
@@ -44,8 +43,8 @@ if (isset($_POST['btn-save'])) {
                 $error = true;
         }
         else {
-            echo "File was not uploaded. The maximum allowed size might have been exceeded.";
             $error = true;
+            echo '<label id="overall" class="incorrect feedback">File was not uploaded. The maximum allowed size might have been exceeded</label>';
         }
     }
     // If OK save status to DB
@@ -95,11 +94,8 @@ if (isset($_POST['btn-save'])) {
         if ($query->execute()) {
             header("Location: statuses.php");
         }
-        else {
-            echo "Something went wrong:<br/>";
-            echo $db->error . "<br/>";
-            echo $query->error . "<br/>";
-        }
+        else
+            echo '<label id="overall" class="incorrect feedback">Error: ' . $db->error .'</label>';
     }
 }
 ?>
@@ -109,18 +105,20 @@ if (isset($_POST['btn-save'])) {
         <title>TITS - New status</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="../css/header.css">
-        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/header.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/new_status.css"/>
     </head>
     <body>
 
     <?php include("header.php"); ?>
-
-    <form method="post" 
-        action="<?php echo $_SERVER['PHP_SELF']; ?>" 
+<div id="content">
+    <form method="post"
+        action="<?php echo $_SERVER['PHP_SELF']; ?>"
         id="new_status"
         enctype="multipart/form-data">
         <label for="title">Title</label>
+<br/>
         <input
                 required="required"
                 type="text"
@@ -131,24 +129,26 @@ if (isset($_POST['btn-save'])) {
 <label id="title-feedback"></label>
 <br/>
 <label for="title">Description</label>
-        <input
-                type="text"
+<br/>
+        <textarea rows="5" columns="23"
                 name="description"
                 placeholder="Status description"
-                title="Description"/>
+                title="Description"></textarea>
 <br/>
 <label for="title">Final</label>
-        <input
-                type="checkbox"
-                name="final"
-                title="Task can't be modified after this status is assigned"
-                value="y">
+        <input type="checkbox"
+               name="final"
+               title="Task can't be modified after this status is assigned"
+               value="y">
 <br/>
-<label for="title">Icon</label>
-        <input type="file" name="iconUpload">
+<label for="iconUpload">Icon</label>
 <br/>
-        <button type="submit" name="btn-save">Save status</button>
+        <input id="iconUpload" type="file" name="iconUpload">
+        <label id="iconUpload-feedback"></label>
+<br/>
+        <button type="submit" name="btn-save">Create</button>
     </form>
+</div>
     </body>
     <script src="../js/new_status.js"></script>
     </html>

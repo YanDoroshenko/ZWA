@@ -27,7 +27,7 @@ $user = $query->get_result()->fetch_assoc();
     </li>
 <li id="user-name" class="right">
 <h3 title="Login: <?php echo $user['login']; ?>">
-    &starf; <?php echo $user['name'] ?>
+    <img id="avatar-header" src="../img/avatar_white.png"/> <?php echo $user['name'] ?>
     </h3>
 </li>
 <?php
@@ -42,6 +42,11 @@ if (isset($filter))
         <button type="submit" name="btn-filter">&#x1F50D;</button>
     </form>
 </li>';
+if (isset($context_action))
+    echo '
+<li id="context" class="menu left">' .
+    $context_action .
+'</li>';
 ?>
 </ul>
 </header>

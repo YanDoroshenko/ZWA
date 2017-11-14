@@ -8,8 +8,8 @@
 \vfill
 \begin{center}
     \includegraphics[scale=0.12]{../img/favicon.png}\\
-{\huge Temporal Issue Tracking System\\}
-{\Large User Manual}
+    {\huge Temporal Issue Tracking System\\}
+    {\Large User Manual}
 \end{center}
 \vfill
 \newpage
@@ -20,11 +20,43 @@
 \section{Requirements}
 \subsection{Functional}
 \begin{enumerate}[label=\textbf{FR\arabic*}]
-    \item
-    \item
+    \item Create task
+    \item Assign status to task
+    \item Create status
+    \item Delete status
+    \item Status should have an icon
+    \item Set deadline of the task
+    \item Remove deadline from the task
+    \item Assign tasks
+    \item Unassign task
+    \item Change task's priority
+    \item See log of actions performed on the task
+    \item Task with a final status should not be able to change its status
+    \item Log in
+    \item Log out
+    \item Sign up
+    \item See list of all tasks
+    \item See list of all statuses
+    \item See list of all users
+    \item Have a dashboard with most important tasks based on the deadline and priority
+    \item Filter tasks
+    \item Filter statuses
+    \item See detailed information about the task
 \end{enumerate}
 \subsection{Non-functional}
-\subsection{Implementation}
+\begin{enumerate}[label=\textbf{IR\arabic*}]
+    \item Application should have uniform look and be visually appealing
+    \item Inputs should be pre-validated before submit
+    \item Application should be secure
+    \item Interface should be self-explanatory
+    \item Application should work without JavaScript
+\end{enumerate}
+    \subsection{Implementation}
+    \begin{enumerate}[label=\textbf{IR\arabic*}]
+        \item Application should be written in PHP
+        \item Source code should be licensed under a free license
+        \item Styling and JavaScript files should be separated from the main code
+    \end{enumerate}
 \section{Pages}
 \subsection{Login}
 The first page user sees is the login page. The page consists of the login form and the button, leading to the signup page (in case the user does not have an account yet).

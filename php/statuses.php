@@ -17,8 +17,8 @@ if (isset($_POST['delete'])) {
     $id_to_delete = $_POST['id'];
 
     // Find dependent tasks
-    $check = $db->prepare("SELECT id FROM t_task WHERE status = ?");
-    $check->bind_param("i", $id_to_delete);
+    $check = $db->prepare("SELECT 1 FROM t_task t, t_action a WHERE t.status = ? OR a.source_status = ? OR a.target_status = ? ");
+    $check->bind_param("iii", $id_to_delete, $id_to_delete, $id_to_delete);
     if (!$check->execute())
         $feedback[$id_to_delete] = '<label id="overall" class="incorrect feedback">Something went wrong with the database: ' . $db->error . '</label>';
     else if (mysqli_num_rows($check->get_result()))

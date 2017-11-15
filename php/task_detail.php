@@ -127,10 +127,12 @@ if (isset($task) && isset($_POST['btn-save'])) {
             $action_values[] = $comment;
         }
         $sql_action .= ")";
+        $sql_task = preg_replace("/, *( *,)+/i", " , ", $sql_task);
+        $sql_action = preg_replace("/, *( *,)+/i", " , ", $sql_action);
         $task_query = $db->prepare($sql_task);
         $action_query = $db->prepare($sql_action);
         if (!$task_query || !$action_query)
-            echo '<label class="incorrect feedback">Error: ' . $db->error .'</label>';
+            echo '<label class="incorrect feedback">Error: ' . $db-error .'</label>';
         else {
             $task_query->bind_param($task_types, ...$task_values);
             $action_query->bind_param($action_types, ...$action_values);

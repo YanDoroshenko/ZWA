@@ -21,7 +21,8 @@ Application utilizes MySQL database management system. All the database queries 
 \section{PHP}
 PHP code is split into several files. Header is implemented in \texttt{header.php}, database connection utilities are in \texttt{db.php}, rest of the files implement different pages of the application and are name accordingly.\\
 Header is injected into each page and contains context actions specific for each page.\\
-Passwords are hashed using the salt, combined from the password itself and additional characters, see \texttt{signup.php} or \texttt{login.php}.
+Passwords are hashed using the salt, combined from the password itself and additional characters, see \texttt{signup.php} or \texttt{login.php}.\\
+There is XSS prevention present - all the text, provided by users is escaped with \texttt{htmlspecialchars}.
 \section{CSS}
 CSS styles are stored in separate files, \texttt{style.css} being common for the entire application one and \texttt{header.css} is common for the part of the application, an authorized user can see. \texttt{footer.css} is a common footer for the list pages. The rest of the files correspond each to its own page and are named accordingly.\\
 Pseudoelements are used to style placeholders.\\

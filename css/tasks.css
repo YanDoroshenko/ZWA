@@ -51,7 +51,7 @@ article.task .details .main-details h4 {
 }
 article.task .description {
     float: right;
-    width: 60%;
+    width: 50%;
 }
 article.task .description p {
     margin: 0;

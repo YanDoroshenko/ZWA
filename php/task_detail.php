@@ -99,14 +99,14 @@ if (isset($task) && isset($_POST['btn-save'])) {
         if ($_POST['comment']) {
             $sql_action .= ", ?";
             $action_types .= "s";
-            $comment = $_POST['comment'] . "<br/>";
+            $comment = $_POST['comment'] . "\n";
             if (strtotime($_POST['deadline']) != strtotime($task['deadline']))
                 if (empty($_POST['deadline']))
-                    $comment .= "Deadline removed.<br/>";
+                    $comment .= "Deadline removed.\n";
                 else if (empty($task['deadline']))
-                    $comment .= "Deadline set to ". $_POST['deadline'] . ".<br/>";
+                    $comment .= "Deadline set to ". $_POST['deadline'] . ".\n";
                 else
-                    $comment .= "Deadline changed from " . date("Y-m-d", strtotime($task['deadline'])) . " to " . $_POST['deadline'] . ".<br/>";
+                    $comment .= "Deadline changed from " . date("Y-m-d", strtotime($task['deadline'])) . " to " . $_POST['deadline'] . ".\n";
             if ($task['assignee_id'] != $_POST['assignee'] && $_POST['assignee'] === '')
                 $comment .= "Task unassigned.";
             $action_values[] = $comment;
@@ -117,11 +117,11 @@ if (isset($task) && isset($_POST['btn-save'])) {
             $comment = "";
             if (strtotime($_POST['deadline']) != strtotime($task['deadline']))
                 if (empty($_POST['deadline']))
-                    $comment .= "Deadline removed.<br/>";
+                    $comment .= "Deadline removed.\n";
                 else if (empty($task['deadline']))
-                    $comment .= "Deadline set to ". $_POST['deadline'] . ".<br/>";
+                    $comment .= "Deadline set to ". $_POST['deadline'] . ".\n";
                 else
-                    $comment .= "Deadline changed from " . date("Y-m-d", strtotime($task['deadline'])) . " to " . $_POST['deadline'] . ".<br/>";
+                    $comment .= "Deadline changed from " . date("Y-m-d", strtotime($task['deadline'])) . " to " . $_POST['deadline'] . ".\n";
             if ($task['assignee_id'] != $_POST['assignee'] && $_POST['assignee'] === '')
                 $comment .= "Task unassigned.";
             $action_values[] = $comment;
@@ -197,7 +197,7 @@ if (isset($task)) {
         if ($action_query->execute()) {
             $statuses = $action_query->get_result();
             while ($status = $statuses->fetch_assoc()) {
-                echo "<option value=\"" . $status['id'] . ($status['id'] == $task['status_id'] ? "\" selected>" : "\">") . $status['title'] . "</option>";
+                echo "<option value=\"" . $status['id'] . ($status['id'] == $task['status_id'] ? "\" selected>" : "\">") . htmlspecialchars($status['title']) . "</option>";
             }
         }
         else {
@@ -208,12 +208,12 @@ if (isset($task)) {
         echo "</select><br/>";
     }
     else
-        echo "<h3 id=\"status\">" . $task['status'] . "</h3>";
+        echo "<h3 id=\"status\">" . htmlspecialchars($task['status']) . "</h3>";
     echo "</div>";
     echo "<div class=\"info\"  id=\"second\">";
     echo '<label for="task-name">Task name</label>';
-    echo "<h2 class=\"task-name\">" . $task['name'] . "</h2>";
-    echo "<h5 id=\"task_description\">" . $task['description'] . "</h5>";
+    echo "<h2 class=\"task-name\">" . htmlspecialchars($task['name']) . "</h2>";
+    echo "<h5 id=\"task_description\">" . htmlspecialchars($task['description']) . "</h5>";
     echo "</div>";
     echo "<div class=\"info";
     if (!empty($task['deadline']))
@@ -229,7 +229,7 @@ if (isset($task)) {
     }
     else if (!empty($task['deadline']))
         echo "<span>" . $task['deadline'] . "</span><br/>";
-    echo "<h4 class=\"user\">Reporter</h4><br/><h3>" . $task['reporter_name'] . "</h3><span>(" . $task['reporter'] . ")</span><br/><br/>";
+    echo "<h4 class=\"user\">Reporter</h4><br/><h3>" . htmlspecialchars($task['reporter_name']) . "</h3><span>(" . htmlspecialchars($task['reporter']) . ")</span><br/><br/>";
     if ($_SESSION['user'] == $task['reporter_id'] || !empty($task['assignee']))
         echo "<h4 class=\"user\">Assignee</h4><br/>";
     if ($_SESSION['user'] == $task['reporter_id']) {
@@ -240,7 +240,7 @@ if (isset($task)) {
             $assignees = $query->get_result();
             while ($user = $assignees->fetch_assoc()) {
                 $displayName = $user['name'] ? $user['name'] . " (" . $user['login'] . ")" : $user['login'];
-                echo "<option value=\"" . $user['id'] . ($user['id'] == $task['assignee_id'] ? "\" selected>" : "\">") . $displayName . "</option>";
+                echo "<option value=\"" . $user['id'] . ($user['id'] == $task['assignee_id'] ? "\" selected>" : "\">") . htmlspecialchars($displayName) . "</option>";
             }
         }
         else {
@@ -251,7 +251,7 @@ if (isset($task)) {
         echo "</select>";
     }
     else if ($_SESSION['user'] == $task['reporter_id'] || !empty($task['assignee']))
-        echo "<h3>" . $task['assignee_name'] . "</h3><span>(" . $task['assignee'] . ")</span>";
+        echo "<h3>" . htmlspecialchars($task['assignee_name']) . "</h3><span>(" . htmlspecialchars($task['assignee']) . ")</span>";
     echo "</div>";
 }
 ?>
@@ -293,13 +293,13 @@ else {
 
         $action_str = "<article class=\"action\"><h4 class=\"author\">$actor_n ($actor_l)</h4> on <h5>$timepoint</h5>";
         if (isset($source_status) && isset($target_status))
-            $action_str .= "<p>Status change: from $source_status to $target_status</p>";
+            $action_str .= "<p>Status change: from " . htmlspecialchars($source_status) . " to ". htmlspecialchars($target_status) . "</p>";
         if (isset($source_priority) && isset($target_priority))
             $action_str .= "<p>Priority change: from $source_priority to $target_priority</p>";
         if (isset($assignee_l) && isset($assignee_n))
-            $action_str .= "<p>Assigned $assignee_n($assignee_l)</p>";
+            $action_str .= "<p>Assigned " . htmlspecialchars($assignee_n) . " (" . htmlspecialchars($assignee_l) . ")</p>";
         if (isset($description))
-            $action_str .= "<p>Comment: $description</p>";
+            $action_str .= "<p>Comment: " . nl2br(htmlspecialchars($description)) . "</p>";
 
         echo $action_str . "</article>";
     }

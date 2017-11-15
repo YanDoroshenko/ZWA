@@ -41,7 +41,7 @@ else {
     <?php include("header.php"); ?>
     <div id="content">
         <h1 id="title"><img id="logo-home" src="../img/favicon.png"/><span>Temporal Issue Tracking System</span></h1>
-        <h2 id="welcome">Welcome, <?php echo '<span id="name">' . $userRow['name'] . '</span>' ?></h2>
+        <h2 id="welcome">Welcome, <?php echo '<span id="name">' . htmlspecialchars($userRow['name']) . '</span>' ?></h2>
         <h3 id="notice">Tasks below require your attention the most</h3>
 <?php
 if (isset($tasks))
@@ -52,8 +52,8 @@ if (isset($tasks))
         $task_str .= "<img class=\"status\" src=\"" . $task['icon_path']. "\"/>";
         $task_str .= "<h4 class=\"priority\">" . $task['priority'] . "</h4>";
         $task_str .= "<div class=\"main-details\">";
-        $task_str .= "<h3 class=\"name\">" . $task['name'] . ":</h3>";
-        $task_str .= "<span class=\"status\">" . $task['status'] . "</span>";
+        $task_str .= "<h3 class=\"name\">" . htmlspecialchars($task['name']) . ":</h3>";
+        $task_str .= "<span class=\"status\">" . htmlspecialchars($task['status']) . "</span>";
         if (!empty($task['deadline'])) {
             $task_str .= "<span class=\"deadline ";
             if (strtotime($task['deadline']) < time())
@@ -63,14 +63,14 @@ if (isset($tasks))
             $task_str .= "\">Deadline: " . date("d.m.Y", strtotime($task['deadline'])) . "</span>";
         }
         $task_str .= "<br/>";
-        $task_str .= "<span class=\"user reporter\">Reporter: <h4>" . $task['reporter_n'] . "</h4> (".  $task['reporter_l']. ")</span>";
+        $task_str .= "<span class=\"user reporter\">Reporter: <h4>" . htmlspecialchars($task['reporter_n']) . "</h4> (".  htmlspecialchars($task['reporter_l']) . ")</span>";
         $task_str .= "<br/>";
         if (!empty($task['assignee_l']))
-            $task_str .= "<span class=\"user\"><span>Assignee: </span><h4>" . $task['assignee_n'] . "</h4> (".  $task['assignee_l']. ")</span>";
+            $task_str .= "<span class=\"user\"><span>Assignee: </span><h4>" . htmlspecialchars($task['assignee_n']) . "</h4> (".  htmlspecialchars($task['assignee_l']) . ")</span>";
         $task_str .= "</div>";
         $task_str .= "</div>";
         if (!empty($task['description']))
-            $task_str .= "<div class=\"description\"><p>" . $task['description'] . "</p></div>";
+            $task_str .= "<div class=\"description\"><p>" . htmlspecialchars($task['description']) . "</p></div>";
         $task_str .= "</article>";
         $task_str .= "</a>";
         echo $task_str;

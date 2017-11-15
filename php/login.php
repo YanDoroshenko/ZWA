@@ -80,7 +80,7 @@ if (isset($_POST['btn-login'])) {
             autofocus="autofocus"
             value="<?php
 if (isset($login))
-    echo $login; ?>"
+    echo htmlspecialchars($login); ?>"
         />
 <label class="feedback" id="login-feedback"></label>
 <br/>

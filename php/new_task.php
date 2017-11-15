@@ -101,7 +101,7 @@ if ($query->execute()) {
     $assignees = $query->get_result();
     while ($assignee = $assignees->fetch_assoc()) {
         $displayName = $assignee['name'] ? $assignee['name'] . " (" . $assignee['login'] . ")" : $assignee['login'];
-        echo "<option value=\"" . $assignee['id'] . "\"\">" . $displayName . "</option>";
+        echo "<option value=\"" . $assignee['id'] . "\"\">" . htmlspecialchars($displayName) . "</option>";
     }
 }
 else

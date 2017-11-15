@@ -115,15 +115,15 @@ if (isset($statuses))
     while ($status = $statuses->fetch_assoc()) {
         echo "<article>";
         if (isset($status['icon_path']))
-            echo "<img src=\"" . $status['icon_path'] . "\" alt=\"" . $status['title'] . "\" width=25pt/>";
+            echo "<img src=\"" . htmlspecialchars($status['icon_path']) . "\" alt=\"" . htmlspecialchars($status['title']) . "\" width=25pt/>";
         echo "<div class=\"details\"/>";
-        echo "<h3>" . $status['title'] . "</h3>";
+        echo "<h3>" . htmlspecialchars($status['title']) . "</h3>";
         if ($status['final'])
             echo "<h4 class=\"final\">Final</h4>";
         echo "<br/>";
         echo "<h4>";
         if ($status['description'])
-            echo $status['description'];
+            echo htmlspecialchars($status['description']);
         else
             echo "No description";
         echo "</h4>";

@@ -73,8 +73,8 @@ include("header.php");
         echo "<article>
             <img class='avatar' src='../img/avatar_blue.png'>
 <div class='user-details'>
-<h3>" . $user['name'] . "</h3>
-<h4>" . $user['login'] . "</h4>
+<h3>" . htmlspecialchars($user['name']) . "</h3>
+<h4>" . htmlspecialchars($user['login']) . "</h4>
 </div>
 </article>
 ";

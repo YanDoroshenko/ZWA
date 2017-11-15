@@ -27,7 +27,7 @@ $user = $query->get_result()->fetch_assoc();
     </li>
 <li id="user-name" class="right">
 <h3 title="Login: <?php echo $user['login']; ?>">
-    <img id="avatar-header" src="../img/avatar_white.png"/> <?php echo $user['name'] ?>
+    <img id="avatar-header" src="../img/avatar_white.png"/> <?php echo htmlspecialchars($user['name']) ?>
     </h3>
 </li>
 <?php

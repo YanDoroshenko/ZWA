@@ -41,7 +41,7 @@ if (isset($_POST['btn-signup'])) {
         $count = mysqli_num_rows($result);
         if ($count != 0) {
             $error = true;
-                echo '<label id="overall" class="incorrect feedback">Login ' . $login .' is already taken</label>';
+                echo '<label id="overall" class="incorrect feedback">Login ' . htmlspecialchars($login) .' is already taken</label>';
         }
 
         $hashedPassword = password_hash($password1, PASSWORD_DEFAULT, ['salt' => 'kjihgfedcba' . $login . 'abcdefghijk']);
@@ -93,7 +93,7 @@ if (isset($_POST['btn-signup'])) {
         <input type="text" name="name" id="name" placeholder="Name"
         value="<?php
 if (isset($name))
-    echo $name ?>"/>
+    echo htmlspecialchars($name) ?>"/>
 <br/>
 
 <label for="login">Login</label>

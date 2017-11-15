@@ -29,15 +29,11 @@ if (isset($_POST['btn-save'])) {
     // Icon processing
     if (!empty($_FILES["iconUpload"]["name"])) {
         if (is_uploaded_file($_FILES["iconUpload"]["tmp_name"])) {
-            foreach ($_FILES["iconUpload"] as $FILE) {
-                echo $FILE;
-            };
-            echo "<br/>";
             $source_file = $_FILES["iconUpload"]["name"];
             $upload_dir = "uploads/";
             $target_file = $upload_dir . basename($source_file);
             $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-            $target_file = $upload_dir . strtolower($title) . "." . $imageFileType;
+            $target_file = $upload_dir . htmlspecialchars(strtolower($title)) . "." . $imageFileType;
 
             if (getimagesize($_FILES["iconUpload"]["tmp_name"]) === false)
                 $error = true;

@@ -35,21 +35,6 @@ header ul li a, header ul li h3 {
 .right {
     float: right;
 }
-.right.edge {
-    margin-right: 0;
-}
-.left.edge {
-    margin-left: 0;
-}
-#tasks {
-    margin-left: 0.7em;
-}
-#users {
-    margin-left: 0.6em;
-}
-#logout {
-    margin-left: 0.2em;
-}
 #search {
     padding: 0.275em;
     border-left: 1px solid white;

@@ -27,7 +27,7 @@ else {
 }
 ?>
     <!DOCTYPE html>
-    <html>
+    <html lang="en">
     <head>
         <title>TITS - Home</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -40,16 +40,16 @@ else {
     <body>
     <?php include("header.php"); ?>
     <div id="content">
-        <h1 id="title"><img id="logo-home" src="../img/favicon.png"/><span>Temporal Issue Tracking System</span></h1>
+        <h1 id="title"><img id="logo-home" src="../img/favicon.png" alt="logo"/><span>Temporal Issue Tracking System</span></h1>
         <h2 id="welcome">Welcome, <?php echo '<span id="name">' . htmlspecialchars($userRow['name']) . '</span>' ?></h2>
         <h3 id="notice">Tasks below require your attention the most</h3>
 <?php
 if (isset($tasks))
     while ($task = $tasks->fetch_assoc()) {
-        $task_str = "<a href=task_detail.php?id=" . $task['id'] . ">";
+        $task_str = "<a href='task_detail.php?id=" . $task['id'] . "'>";
         $task_str .= '<article class="task">';
         $task_str .= "<div class=\"details\">";
-        $task_str .= "<img class=\"status\" src=\"" . $task['icon_path']. "\"/>";
+        $task_str .= "<img class=\"status\" src=\"" . $task['icon_path']. "\" alt=\"" . htmlspecialchars($task['status']) . "\"/>";
         $task_str .= "<h4 class=\"priority\">" . $task['priority'] . "</h4>";
         $task_str .= "<div class=\"main-details\">";
         $task_str .= "<h3 class=\"name\">" . htmlspecialchars($task['name']) . ":</h3>";
@@ -63,10 +63,10 @@ if (isset($tasks))
             $task_str .= "\">Deadline: " . date("d.m.Y", strtotime($task['deadline'])) . "</span>";
         }
         $task_str .= "<br/>";
-        $task_str .= "<span class=\"user reporter\">Reporter: <h4>" . htmlspecialchars($task['reporter_n']) . "</h4> (".  htmlspecialchars($task['reporter_l']) . ")</span>";
+        $task_str .= "<span class=\"user reporter\">Reporter: <span class=\"user name\">" . htmlspecialchars($task['reporter_n']) . "</span> (".  htmlspecialchars($task['reporter_l']) . ")</span>";
         $task_str .= "<br/>";
         if (!empty($task['assignee_l']))
-            $task_str .= "<span class=\"user\"><span>Assignee: </span><h4>" . htmlspecialchars($task['assignee_n']) . "</h4> (".  htmlspecialchars($task['assignee_l']) . ")</span>";
+            $task_str .= "<span class=\"user\"><span>Assignee: </span><span class=\"user name\">" . htmlspecialchars($task['assignee_n']) . "</span> (".  htmlspecialchars($task['assignee_l']) . ")</span>";
         $task_str .= "</div>";
         $task_str .= "</div>";
         if (!empty($task['description']))

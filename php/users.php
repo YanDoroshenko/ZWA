@@ -52,7 +52,7 @@ $query->execute();
 $users = $query->get_result();
 ?>
     <!DOCTYPE html>
-    <html>
+    <html lang="en">
     <head>
         <title>TITS - Users</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -71,7 +71,7 @@ include("header.php");
     // Show all the users
     while ($user = $users->fetch_assoc()) {
         echo "<article>
-            <img class='avatar' src='../img/avatar_blue.png'>
+            <img class='avatar' src='../img/avatar_blue.png' alt='user'>
 <div class='user-details'>
 <h3>" . htmlspecialchars($user['name']) . "</h3>
 <h4>" . htmlspecialchars($user['login']) . "</h4>
@@ -85,9 +85,9 @@ include("header.php");
 <?php
 //Pagination
 if ($from > 1)
-    echo "<a id=\"prev\" class=\"pagination\" href=\"users.php?page=" . intval($page - 1) . "\">&#x25C4; Previous page<a/>";
+    echo "<a id=\"prev\" class=\"pagination\" href=\"users.php?page=" . intval($page - 1) . "\">&#x25C4; Previous page</a>";
 if ($to < $count)
-    echo "<a id=\"next\" class=\"pagination\" href=\"users.php?page=" . intval($page + 1) . "\">Next page &#x25BA;<a/>";
+    echo "<a id=\"next\" class=\"pagination\" href=\"users.php?page=" . intval($page + 1) . "\">Next page &#x25BA;</a>";
 echo "<h4 id=\"count\" class=\"pagination\">$from-$to/$count</h4>";
 ?>
 </footer>

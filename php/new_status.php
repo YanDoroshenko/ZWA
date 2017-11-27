@@ -33,7 +33,7 @@ if (isset($_POST['btn-save'])) {
             $upload_dir = "uploads/";
             $target_file = $upload_dir . basename($source_file);
             $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-            $target_file = $upload_dir . htmlspecialchars(strtolower($title)) . "." . $imageFileType;
+            $target_file = $upload_dir . str_replace(" ", "_", htmlspecialchars(strtolower($title))) . "." . $imageFileType;
 
             if (getimagesize($_FILES["iconUpload"]["tmp_name"]) === false)
                 $error = true;
@@ -96,7 +96,7 @@ if (isset($_POST['btn-save'])) {
 }
 ?>
     <!DOCTYPE html>
-    <html>
+    <html lang="en">
     <head>
         <title>TITS - New status</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -126,7 +126,7 @@ if (isset($_POST['btn-save'])) {
 <br/>
 <label for="title">Description</label>
 <br/>
-        <textarea rows="5" columns="23"
+        <textarea rows="5"
                 name="description"
                 placeholder="Status description"
                 title="Description"></textarea>
@@ -145,7 +145,7 @@ if (isset($_POST['btn-save'])) {
         <button type="submit" name="btn-save">Create</button>
     </form>
 </div>
-    </body>
     <script src="../js/new_status.js"></script>
+    </body>
     </html>
 <?php ob_end_flush(); ?>

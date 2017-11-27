@@ -61,7 +61,7 @@ if (isset($_POST['btn-save'])) {
 }
 ?>
     <!DOCTYPE html>
-    <html>
+    <html lang="en">
     <head>
         <title>TITS - New task</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -92,7 +92,7 @@ min="1" max="10" title="Priority" value="5">
 <br/>
 <label for="assignee">Assignee</label>
 <br/>
-        <select name="assignee" title="Assignee">
+        <select id="assignee" name="assignee" title="Assignee">
 <?php
 // List users
 echo "<option value=''>None</option>";
@@ -101,7 +101,7 @@ if ($query->execute()) {
     $assignees = $query->get_result();
     while ($assignee = $assignees->fetch_assoc()) {
         $displayName = $assignee['name'] ? $assignee['name'] . " (" . $assignee['login'] . ")" : $assignee['login'];
-        echo "<option value=\"" . $assignee['id'] . "\"\">" . htmlspecialchars($displayName) . "</option>";
+        echo "<option value=\"" . $assignee['id'] . "\">" . htmlspecialchars($displayName) . "</option>";
     }
 }
 else
@@ -122,7 +122,7 @@ else
 <br/>
 <label for="description">Description</label>
 <br/>
-        <textarea rows="3" cols="23"
+        <textarea id="description" rows="3" cols="23"
 name="description"
                 placeholder="Task description">
 </textarea>
@@ -130,7 +130,7 @@ name="description"
         <button type="submit" name="btn-save">Create</button>
     </form>
 </div>
-    </body>
     <script src="../js/new_task.js"></script>
+    </body>
     </html>
 <?php ob_end_flush(); ?>

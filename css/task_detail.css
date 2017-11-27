@@ -81,3 +81,6 @@ article.action h4, article.action h5 {
 #user-name h3 {
     color: white !important;
 }
+label.task-name {
+    font-weight: bold;
+}

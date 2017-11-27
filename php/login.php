@@ -56,7 +56,7 @@ if (isset($_POST['btn-login'])) {
 }
 ?>
     <!DOCTYPE html>
-    <html>
+    <html lang="en">
     <head><title>TITS - Login</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>

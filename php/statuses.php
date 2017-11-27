@@ -94,7 +94,7 @@ else {
 
 ?>
     <!DOCTYPE html>
-    <html>
+    <html lang="en">
     <head>
         <title>TITS - Statuses</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -115,8 +115,8 @@ if (isset($statuses))
     while ($status = $statuses->fetch_assoc()) {
         echo "<article>";
         if (isset($status['icon_path']))
-            echo "<img src=\"" . htmlspecialchars($status['icon_path']) . "\" alt=\"" . htmlspecialchars($status['title']) . "\" width=25pt/>";
-        echo "<div class=\"details\"/>";
+            echo "<img src=\"" . str_replace(" ", "_", htmlspecialchars($status['icon_path'])) . "\" alt=\"" . htmlspecialchars($status['title']) . "\" width=\"25\" />";
+        echo "<div class=\"details\">";
         echo "<h3>" . htmlspecialchars($status['title']) . "</h3>";
         if ($status['final'])
             echo "<h4 class=\"final\">Final</h4>";

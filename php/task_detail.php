@@ -165,7 +165,7 @@ if (isset($task) && isset($_POST['btn-save'])) {
 
 ?>
     <!DOCTYPE html>
-    <html>
+    <html lang="en">
     <head>
         <title>TITS - Task <?php echo $id ?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -184,14 +184,15 @@ if (isset($task) && isset($_POST['btn-save'])) {
 // Show task details
 if (isset($task)) {
     echo "<div class=\"info\" id=\"first\"><br/>";
-    echo '<img class="task-status-icon" src="' . $task['icon'] . '" alt=""/><br/>';
-    echo "<label for=\"priority\">Priority</label>";
-    if ($_SESSION['user'] == $task['reporter_id'])
-        echo "<input type=\"number\" name=\"priority\" id=\"priority\" min=\"1\" max=\"10\" title=\"Priority\" value=\"" . $task['priority'] . "\">";
+    echo '<img class="task-status-icon" src="' . str_replace(" ", "_", htmlspecialchars($task['icon'])) . '" alt=""/><br/>';
+    if ($_SESSION['user'] == $task['reporter_id']) {
+        echo "<label for=\"priority\">Priority</label>";
+        echo "<input id=\"priority\" type=\"number\" name=\"priority\" id=\"priority\" min=\"1\" max=\"10\" title=\"Priority\" value=\"" . $task['priority'] . "\">";
+    }
     else
         echo "<h3 id=\"priority\">" . $task['priority'] . "</h3>";
-    echo '<label for="status">Status</label>';
     if (($_SESSION['user'] == $task['reporter_id'] || $_SESSION['user'] == $task['assignee_id']) && $task['final'] != 1) {
+        echo '<label for="status">Status</label>';
         echo '<select id="status" name="status" title="Status">';
         $action_query = $db->prepare("SELECT id, title, icon_path FROM t_status");
         if ($action_query->execute()) {
@@ -211,9 +212,10 @@ if (isset($task)) {
         echo "<h3 id=\"status\">" . htmlspecialchars($task['status']) . "</h3>";
     echo "</div>";
     echo "<div class=\"info\"  id=\"second\">";
-    echo '<label for="task-name">Task name</label>';
+    echo '<label class="task-name">Task name</label>';
     echo "<h2 class=\"task-name\">" . htmlspecialchars($task['name']) . "</h2>";
-    echo "<h5 id=\"task_description\">" . htmlspecialchars($task['description']) . "</h5>";
+    if (!empty($task['description']))
+        echo "<h5 id=\"task_description\">" . htmlspecialchars($task['description']) . "</h5>";
     echo "</div>";
     echo "<div class=\"info";
     if (!empty($task['deadline']))

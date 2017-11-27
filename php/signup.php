@@ -67,7 +67,7 @@ if (isset($_POST['btn-signup'])) {
 }
 ?>
     <!DOCTYPE html>
-    <html>
+    <html lang="en">
     <head>
         <title>TITS - Signup</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>

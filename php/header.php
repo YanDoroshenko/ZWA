@@ -11,7 +11,7 @@ $user = $query->get_result()->fetch_assoc();
 <header>
 <ul>
 <li class="left menu edge">
-     <a href="home.php"><img src="../img/favicon.png"> Home</a>
+     <a href="home.php"><img src="../img/favicon.png" alt="Logo"> Home</a>
 </li>
     <li class="left menu">
         <a id="tasks" href="tasks.php">Tasks</a>
@@ -27,7 +27,7 @@ $user = $query->get_result()->fetch_assoc();
     </li>
 <li id="user-name" class="right">
 <h3 title="Login: <?php echo $user['login']; ?>">
-    <img id="avatar-header" src="../img/avatar_white.png"/> <?php echo htmlspecialchars($user['name']) ?>
+    <img id="avatar-header" src="../img/avatar_white.png" alt="user"/> <?php echo htmlspecialchars($user['name']) ?>
     </h3>
 </li>
 <?php
@@ -36,7 +36,7 @@ if (isset($filter))
 <li id="search" class="right">
 <form method="post" action="' . $self . '">
 <label for="filter">Filter</label>
-        <input type="text" name="filter" placeholder="Filter"
+        <input id="filter" type="text" name="filter" placeholder="Filter"
         value="' . str_replace("%", "", $filter) . '"
         />
         <button type="submit" name="btn-filter">&#x1F50D;</button>

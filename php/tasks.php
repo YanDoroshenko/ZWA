@@ -71,6 +71,7 @@ echo '<link rel="stylesheet" type="text/css" href="../css/altStyle.css"/>';
 ?>
         <link rel="stylesheet" type="text/css" href="../css/tasks.css"/>
         <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
+        <link rel="stylesheet" type="text/css" media="print" href="../css/print.css"/>
     </head>
     <body>
 

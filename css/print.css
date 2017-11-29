@@ -1,0 +1,13 @@
+* {
+    background-color: transparent;
+}
+header, footer a {
+    display:none;
+}
+.description, .details {
+    display: block;
+    float: auto;
+}
+article {
+    border: 1px solid black;
+}

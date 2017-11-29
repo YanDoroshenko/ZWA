@@ -39,6 +39,7 @@ if (isset($_COOKIE["style"]) && $_COOKIE["style"] == "alt")
 echo '<link rel="stylesheet" type="text/css" href="../css/altStyle.css"/>';
 ?>       <link rel="stylesheet" type="text/css" href="../css/home.css"/>
         <link rel="stylesheet" type="text/css" href="../css/tasks.css"/>
+        <link rel="stylesheet" type="text/css" media="print" href="../css/print.css"/>
     </head>
     <body>
     <?php include("header.php"); ?>

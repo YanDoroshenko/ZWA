@@ -22,3 +22,6 @@ p {
 input, button[name=btn-filter], textarea, select {
     background-color: transparent !important;
 }
+#third.info h3, .task-name, select {
+    color: #999 !important;
+}

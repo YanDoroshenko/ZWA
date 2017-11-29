@@ -37,8 +37,11 @@ $user = $query->get_result()->fetch_assoc();
     <img id="avatar-header" src="../img/avatar_white.png" alt="user"/> <?php echo htmlspecialchars($user['name']) ?>
     </h3>
 </li>
+<?php
+if ($_SERVER["PHP_SELF"] != "/~dorosyan/php/task_detail.php")
+    echo '
 <li class="right menu">
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    <form method="post" action="' . $_SERVER["PHP_SELF"] . '">
 <button type="submit" name="change-style">
 <h3>
 Style
@@ -46,6 +49,8 @@ Style
 </button>
 </form>
 </li>
+';
+?>
 <?php
 if (isset($filter))
     echo '

@@ -1,0 +1,24 @@
+body {
+    background-color: #002;
+}
+header {
+    background-color: #003 !important;
+}
+article {
+    background-color: #003 !important;
+}
+#name {
+    color: #999 !important;
+}
+.name {
+    color: #999 !important;
+}
+h4.priority {
+    color: #999 !important;
+}
+p {
+    color: #999 !important;
+}
+input, button[name=btn-filter], textarea, select {
+    background-color: transparent !important;
+}

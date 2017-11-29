@@ -6,6 +6,15 @@ session_start();
 if (isset($_SESSION['user']) != "") {
     header("Location: home.php");
 }
+
+if (isset($_GET['change-style'])) {
+    if (isset($_COOKIE["style"]) && $_COOKIE["style"] == "alt")
+        setcookie("style", "main");
+    else
+        setcookie("style", "alt");
+    header("Location: " . $_SERVER['PHP_SELF']);
+}
+
 include_once 'db.php';
 
 $error = false;
@@ -74,6 +83,10 @@ if (isset($_POST['btn-signup'])) {
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="../css/style.css"/>
         <link rel="stylesheet" type="text/css" href="../css/signup.css"/>
+ <?php
+if (isset($_COOKIE["style"]) && $_COOKIE["style"] == "alt")
+echo '<link rel="stylesheet" type="text/css" href="../css/altStyle.css"/>';
+?>
     </head>
     <body>
 <header>
@@ -82,11 +95,18 @@ if (isset($_POST['btn-signup'])) {
             Temporal Issue Tracking System
         </span>
         <a href="login.php">&#x26BF; Log in</a>
+    <form class="signup-style" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<button type="submit" name="change-style">
+<h3>
+Style
+</h3>
+</button>
+</form>
 </header>
 <div id="content">
     <form method="post"
           action="<?php echo $_SERVER['PHP_SELF']; ?>"
-          id="signup">
+          id="form-signup">
 
 <label for="name">Name</label>
 <br/>

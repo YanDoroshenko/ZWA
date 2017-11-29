@@ -66,3 +66,13 @@ label#overall {
     margin-left: 34em;
     font-size: 125%;
 }
+.signup-style {
+    display: inline-block;
+    float: right;
+}
+.signup-style button {
+    background-color: transparent;
+    padding: 0.5em;
+    border: none;
+    color: white;
+}

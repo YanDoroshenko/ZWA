@@ -65,6 +65,10 @@ else {
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="../css/header.css"/>
         <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+ <?php
+if (isset($_COOKIE["style"]) && $_COOKIE["style"] == "alt")
+echo '<link rel="stylesheet" type="text/css" href="../css/altStyle.css"/>';
+?>
         <link rel="stylesheet" type="text/css" href="../css/tasks.css"/>
         <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
     </head>

@@ -59,6 +59,10 @@ $users = $query->get_result();
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="../css/header.css"/>
         <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+ <?php
+if (isset($_COOKIE["style"]) && $_COOKIE["style"] == "alt")
+echo '<link rel="stylesheet" type="text/css" href="../css/altStyle.css"/>';
+?>
         <link rel="stylesheet" type="text/css" href="../css/users.css"/>
         <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
     </head>
@@ -73,7 +77,7 @@ include("header.php");
         echo "<article>
             <img class='avatar' src='../img/avatar_blue.png' alt='user'>
 <div class='user-details'>
-<h3>" . htmlspecialchars($user['name']) . "</h3>
+<h3 class=\"user name\">" . htmlspecialchars($user['name']) . "</h3>
 <h4>" . htmlspecialchars($user['login']) . "</h4>
 </div>
 </article>

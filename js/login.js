@@ -45,7 +45,7 @@ password.addEventListener("blur", (e) => {
 });
 
 // Entire form validation before submit
-const form = document.querySelector("form");
+const form = document.getElementById("form-login");
 form.addEventListener("submit", (e) => {
     if (login.value.search(/^[a-zA-Z]+[a-zA-Z0-9]*/) == -1) {
         e.preventDefault();

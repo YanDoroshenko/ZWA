@@ -101,6 +101,10 @@ else {
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="../css/header.css"/>
         <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+ <?php
+if (isset($_COOKIE["style"]) && $_COOKIE["style"] == "alt")
+echo '<link rel="stylesheet" type="text/css" href="../css/altStyle.css"/>';
+?>
         <link rel="stylesheet" type="text/css" href="../css/statuses.css"/>
         <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
     </head>
@@ -117,7 +121,7 @@ if (isset($statuses))
         if (isset($status['icon_path']))
             echo "<img src=\"" . str_replace(" ", "_", htmlspecialchars($status['icon_path'])) . "\" alt=\"" . htmlspecialchars($status['title']) . "\" width=\"25\" />";
         echo "<div class=\"details\">";
-        echo "<h3>" . htmlspecialchars($status['title']) . "</h3>";
+        echo "<h3 class=\"name\">" . htmlspecialchars($status['title']) . "</h3>";
         if ($status['final'])
             echo "<h4 class=\"final\">Final</h4>";
         echo "<br/>";

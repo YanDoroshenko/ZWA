@@ -3,6 +3,13 @@
 ob_start();
 require_once 'db.php';
 
+if (isset($_POST['change-style'])) {
+    if (isset($_COOKIE["style"]) && $_COOKIE["style"] == "alt")
+        setcookie("style", "main");
+    else
+        setcookie("style", "alt");
+    header("Location: " . $_SERVER['PHP_SELF']);
+}
 $query = $db->prepare("SELECT id, login, name FROM t_user WHERE id = ?");
 $query->bind_param("i", $_SESSION['user']);
 $query->execute();
@@ -29,6 +36,15 @@ $user = $query->get_result()->fetch_assoc();
 <h3 title="Login: <?php echo $user['login']; ?>">
     <img id="avatar-header" src="../img/avatar_white.png" alt="user"/> <?php echo htmlspecialchars($user['name']) ?>
     </h3>
+</li>
+<li class="right menu">
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<button type="submit" name="change-style">
+<h3>
+Style
+</h3>
+</button>
+</form>
 </li>
 <?php
 if (isset($filter))

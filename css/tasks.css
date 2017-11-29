@@ -56,7 +56,7 @@ article.task .description {
 article.task .description p {
     margin: 0;
 }
-span.user.name {
+article.task .details span.user.name {
     font-weight: bold;
-    color: #333 !important;
+    color: #333;
 }

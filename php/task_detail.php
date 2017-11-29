@@ -172,6 +172,10 @@ if (isset($task) && isset($_POST['btn-save'])) {
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="../css/header.css"/>
         <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+ <?php
+if (isset($_COOKIE["style"]) && $_COOKIE["style"] == "alt")
+echo '<link rel="stylesheet" type="text/css" href="../css/altStyle.css"/>';
+?>
         <link rel="stylesheet" type="text/css" href="../css/task_detail.css"/>
     </head>
     <body>

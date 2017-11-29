@@ -17,5 +17,5 @@ h2#welcome, h3#notice {
 }
 span.user.name {
     font-weight: bold;
-    color: #333 !important;
+    color: #333;
 }

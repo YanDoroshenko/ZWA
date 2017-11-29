@@ -35,6 +35,10 @@ header ul li a, header ul li h3 {
 .right {
     float: right;
 }
+button {
+    background-color: transparent;
+    border: 0px solid black;
+}
 #search {
     padding: 0.275em;
     border-left: 1px solid white;

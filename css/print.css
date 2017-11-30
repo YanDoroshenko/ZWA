@@ -1,5 +1,5 @@
-body {
-    background-color: transparent;
+body, footer, article {
+    background-color: transparent !important;
 }
 header, footer a {
     display:none;
@@ -10,4 +10,7 @@ header, footer a {
 }
 article {
     border: 1px solid black;
+}
+.name, h4.priority, div.description p {
+    color: black !important;
 }

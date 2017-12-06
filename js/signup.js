@@ -4,6 +4,8 @@ const loginFeedback = document.getElementById("login-feedback");
 login.removeAttribute("required");
 login.removeAttribute("pattern");
 
+let loginTaken = false;
+
 login.addEventListener("blur", (e) => {
     if (login.value.search(/^[a-zA-Z]+[a-zA-Z0-9]*$/) != -1) {
         login.classList.add("correct");
@@ -19,6 +21,21 @@ login.addEventListener("blur", (e) => {
         loginFeedback.classList.remove("correct");
         loginFeedback.innerHTML = "\u2716 Login should start with a letter and consist only of letters and digits";
     }
+    const request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        console.log(this);
+        if (this.readyState == 4 && this.status == 200 && this.responseText == "taken") {
+            loginTaken = true;
+
+            login.classList.add("incorrect");
+            login.classList.remove("correct");
+            loginFeedback.classList.add("incorrect");
+            loginFeedback.classList.remove("correct");
+            loginFeedback.innerHTML = "\u2716 Login already taken";
+        }
+    };
+    request.open("GET", window.location.pathname.replace(/php\/.*/, "php/available.php?login=" + login.value));
+    request.send();
 });
 
 // Password validation
@@ -70,6 +87,8 @@ password2.addEventListener("blur", (e) => {
 // Entire form validation before submit
 const form = document.getElementById("form-signup");
 form.addEventListener("submit", (e) => {
+    if (loginTaken)
+        e.preventDefault();
     if (login.value.search(/^[a-zA-Z]+[a-zA-Z0-9]*/) == -1) {
         e.preventDefault();
         login.classList.add("incorrect");

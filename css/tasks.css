@@ -1,3 +1,6 @@
+#content {
+    overflow: scroll;
+}
 a {
     color: #333;
 }

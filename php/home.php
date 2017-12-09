@@ -34,9 +34,9 @@ else {
         <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="../css/header.css"/>
         <link rel="stylesheet" type="text/css" href="../css/style.css"/>
- <?php
+<?php
 if (isset($_COOKIE["style"]) && $_COOKIE["style"] == "alt")
-echo '<link rel="stylesheet" type="text/css" href="../css/altStyle.css"/>';
+    echo '<link rel="stylesheet" type="text/css" href="../css/altStyle.css"/>';
 ?>       <link rel="stylesheet" type="text/css" href="../css/home.css"/>
         <link rel="stylesheet" type="text/css" href="../css/tasks.css"/>
         <link rel="stylesheet" type="text/css" media="print" href="../css/print.css"/>
@@ -73,8 +73,7 @@ if (isset($tasks))
             $task_str .= "<span class=\"user\"><span>Assignee: </span><span class=\"user name\">" . htmlspecialchars($task['assignee_n']) . "</span> (".  htmlspecialchars($task['assignee_l']) . ")</span>";
         $task_str .= "</div>";
         $task_str .= "</div>";
-        if (!empty($task['description']))
-            $task_str .= "<div class=\"description\"><p>" . htmlspecialchars($task['description']) . "</p></div>";
+        $task_str .= "<div class=\"description\"><p>" . htmlspecialchars($task['description']) . "</p></div>";
         $task_str .= "</article>";
         $task_str .= "</a>";
         echo $task_str;

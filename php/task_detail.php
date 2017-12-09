@@ -273,7 +273,7 @@ if (isset($task)) {
     <button id="save" name="btn-save">&#x1F5AB;Save task</button>
 </div>
 </form>
-
+<div id="tasks">
 <?php
 // Show the history of the task
 $actions_sql = "SELECT source_priority, target_priority,  u1.login actor_l, u1.name actor_n, u2.login assignee_l, u2.name assignee_n , ss.title source_t, ts.title target_t,timepoint, a.description FROM t_action a LEFT JOIN t_user u1 ON a.actor = u1.id LEFT JOIN t_user u2 ON a.assignee = u2.id LEFT JOIN t_status ss ON a.source_status = ss.id LEFT JOIN t_status ts ON a.target_status = ts.id WHERE task = ? ORDER BY timepoint DESC";
@@ -311,6 +311,7 @@ else {
     }
 }
 ?>
+</div>
 </div>
     </body>
     </html>

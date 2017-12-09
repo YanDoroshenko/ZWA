@@ -54,7 +54,7 @@ article.task .description {
     width: 50%;
 }
 article.task .description p {
-    margin: 0;
+    margin-top: 0;
 }
 article.task .details span.user.name {
     font-weight: bold;

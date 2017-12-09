@@ -25,3 +25,28 @@ input, button[name=btn-filter], textarea, select {
 #third.info h3, .task-name, select {
     color: #999 !important;
 }
+#form-login {
+    margin-left: 15em !important;
+}
+div.description {
+    float: unset !important;
+    display: block !important;
+    margin-top: 1em;
+}
+article form {
+    float: unset !important;
+}
+#search {
+    float: left;
+}
+.info {
+    display: block !important;
+}
+form#task-detail {
+    display: inline-block;
+    float: left;
+}
+div#tasks {
+    float: right;
+    width: 70%;
+}
